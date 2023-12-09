@@ -1,0 +1,2041 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Shaders>
+  <Item>
+    <Name>rdr2_bump_spec_ambocc_shared</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump_spec_ambocc_shared.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="50" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_mirror</Name>
+    <FileName>
+      <Item bucket="0">rdr2_mirror.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="reflectionsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="reflectionintensity" type="float4" x="0.6" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_glass_nodistortion_bump_spec_ao_shared</Name>
+    <FileName>
+      <Item bucket="5">rdr2_glass_nodistortion_bump_spec_ao_shared.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="reflectionintensity" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="reflectionfalloff" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="reflectiondiffusecontribution" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha_bspec_ao_shareduv_character_hair</Name>
+    <FileName>
+      <Item bucket="2">rdr2_alpha_bspec_ao_shareduv_character_hair.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="detailmapsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularfresnelmax" type="float4" x="2.412" y="0" z="0" w="0" />
+      <Item name="specularfresnelmin" type="float4" x="0.75" y="0" z="0" w="0" />
+      <Item name="specularfresnelexp" type="float4" x="1.28" y="0" z="0" w="0" />
+      <Item name="specdiffuseamount" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="specularfactor2" type="float4" x="40" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="20" y="0" z="0" w="0" />
+      <Item name="detailmapscale" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="detailmapscalev" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="detailmapscaleu" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="mainuvmodulate" type="float4" x="4" y="4" z="-3" w="-3" />
+      <Item name="gblooddatax" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ambocc_shareduv_character</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump_spec_ambocc_shareduv_character.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="detailmapsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="rimglowscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="rimamount" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="rimpower" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="specularfresnelmax" type="float4" x="3.66" y="0" z="0" w="0" />
+      <Item name="specularfresnelmin" type="float4" x="1.85" y="0" z="0" w="0" />
+      <Item name="specularfresnelexp" type="float4" x="2.175" y="0" z="0" w="0" />
+      <Item name="specdiffuseamount" type="float4" x="0.3" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor2" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor2" type="float4" x="300" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="130" y="0" z="0" w="0" />
+      <Item name="detailmapscale" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="detailmapscalev" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="detailmapscaleu" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gblooddatax" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ambocc_shareduv_character_skin</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump_spec_ambocc_shareduv_character_skin.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="detailmapsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="rimglowscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="rimamount" type="float4" x="0.03" y="0" z="0" w="0" />
+      <Item name="rimpower" type="float4" x="2.7" y="0" z="0" w="0" />
+      <Item name="specularfresnelmax" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="specularfresnelmin" type="float4" x="0.25" y="0" z="0" w="0" />
+      <Item name="specularfresnelexp" type="float4" x="1.75" y="0" z="0" w="0" />
+      <Item name="specdiffuseamount" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor2" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="specularfactor2" type="float4" x="22.9" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.75" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="20" y="0" z="0" w="0" />
+      <Item name="detailmapscale" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="detailmapscalev" type="float4" x="39" y="0" z="0" w="0" />
+      <Item name="detailmapscaleu" type="float4" x="54" y="0" z="0" w="0" />
+      <Item name="gblooddatax" type="float4x4" />
+      <Item name="blursize" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="epidermiswieght" type="float4" x="0.3" y="0" z="0" w="0" />
+      <Item name="epidermiscolor" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="dermiswieght" type="float4" x="0.9" y="0" z="0" w="0" />
+      <Item name="dermiscolor" type="float4" x="0.8705" y="0.7725" z="0.7647" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha_bspec_ao_shared</Name>
+    <FileName>
+      <Item bucket="3">rdr2_alpha_bspec_ao_shared.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="50" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_shadowonly</Name>
+    <FileName>
+      <Item bucket="3">rdr2_shadowonly.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="useinsunshadow" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_poster</Name>
+    <FileName>
+      <Item bucket="3">rdr2_poster.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="gcameradistanceatmaxdisplacement" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="gmaxdisplacement" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha_foliage</Name>
+    <FileName>
+      <Item bucket="3">rdr2_alpha_foliage.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <Colour1 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_treerock_prototype</Name>
+    <FileName>
+      <Item bucket="0">rdr2_treerock_prototype.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="detailnormalmapsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscalev" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscaleu" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ambocc_reflection_shared</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump_spec_ambocc_reflection_shared.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="50" y="0" z="0" w="0" />
+      <Item name="clothdiffusecontribution" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="clothsheen" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="clothintensity" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="clothfalloff" type="float4" x="5" y="0" z="0" w="0" />
+      <Item name="reflectionintensity" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="reflectionfalloff" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="reflectiondiffusecontribution" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_grass</Name>
+    <FileName>
+      <Item bucket="3">rdr2_grass.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="diffusesampler" type="Texture" />
+      <Item name="staticlighting" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="g_grassgustwind" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="g_grasssundirection" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="g_grasssuncolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="fadeoffsetslope" type="float4" x="10" y="1" z="0" w="0" />
+      <Item name="g_clipdims" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha_bspec_ao_cloth</Name>
+    <FileName>
+      <Item bucket="3">rdr2_alpha_bspec_ao_cloth.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="504403160262602759">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_ambocc</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump_ambocc.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="30" y="0" z="0" w="0" />
+      <Item name="fresnelterm" type="float4" x="0.9" y="0" z="0" w="0" />
+      <Item name="speculargreenbias" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="speculargreenscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha</Name>
+    <FileName>
+      <Item bucket="3">rdr2_alpha.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="118059015">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_weapon</Name>
+    <FileName>
+      <Item bucket="0">rdr2_weapon.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="50" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_glass_notint_shared</Name>
+    <FileName>
+      <Item bucket="6">rdr2_glass_notint_shared.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="amboccsunfactor" type="float4" x="0.1" y="0" z="0" w="0" />
+      <Item name="amboccfillfactor" type="float4" x="0.9" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ambocc_shareduv</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump_spec_ambocc_shareduv.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+        <Binormal />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="gblooddatax" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_layer_2_nospec_ambocc</Name>
+    <FileName>
+      <Item bucket="0">rdr2_layer_2_nospec_ambocc.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <TexCoord2 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="texturesampler2" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="30" y="0" z="0" w="0" />
+      <Item name="speculardirtmapmax" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="speculardirtmapmin" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="speculardirtmapoffset" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="speculardirtmapinfluence" type="float4" x="-1" y="0" z="0" w="0" />
+      <Item name="dirtmapfactor" type="float4" x="0.8" y="0" z="0" w="0" />
+      <Item name="fresnelterm" type="float4" x="0.9" y="0" z="0" w="0" />
+      <Item name="speculargreenbias" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="speculargreenscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_debris</Name>
+    <FileName>
+      <Item bucket="3">rdr2_debris.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ao_cloth</Name>
+    <FileName>
+      <Item bucket="1">rdr2_bump_spec_ao_cloth.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="504403160262602759">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_cati</Name>
+    <FileName>
+      <Item bucket="0">rdr2_cati.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ambocc_smooth_shared</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump_spec_ambocc_smooth_shared.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="50" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_binoculars_barrel</Name>
+    <FileName>
+      <Item bucket="0">rdr2_binoculars_barrel.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_binoculars_lens</Name>
+    <FileName>
+      <Item bucket="0">rdr2_binoculars_lens.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_glow</Name>
+    <FileName>
+      <Item bucket="0">rdr2_glow.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="heatintensity" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_diffuse</Name>
+    <FileName>
+      <Item bucket="0">rdr2_diffuse.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha_bspec_ao_shareduv_character</Name>
+    <FileName>
+      <Item bucket="2">rdr2_alpha_bspec_ao_shareduv_character.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="504403160262605175">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="detailmapsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularfresnelmax" type="float4" x="1.692" y="0" z="0" w="0" />
+      <Item name="specularfresnelmin" type="float4" x="0.28" y="0" z="0" w="0" />
+      <Item name="specularfresnelexp" type="float4" x="0.54" y="0" z="0" w="0" />
+      <Item name="specdiffuseamount" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor2" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularfactor2" type="float4" x="59" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="10.55" y="0" z="0" w="0" />
+      <Item name="detailmapscale" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="detailmapscalev" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="detailmapscaleu" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="mainuvmodulate" type="float4" x="4" y="4" z="-3" w="-3" />
+      <Item name="gblooddatax" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_beacon</Name>
+    <FileName>
+      <Item bucket="5">rdr2_beacon.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Colour0 />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_fur</Name>
+    <FileName>
+      <Item bucket="5">rdr2_fur.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="noisesampler" type="Texture" />
+      <Item name="gravity" type="float4" x="0.013" y="0" z="0" w="0" />
+      <Item name="lowloddist" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="highloddist" type="float4" x="10" y="0" z="0" w="0" />
+      <Item name="numfurlayers" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="furlayershadowmin" type="float4" x="0.7" y="0" z="0" w="0" />
+      <Item name="furstep" type="float4" x="0.004" y="0" z="0" w="0" />
+      <Item name="noisescalev" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="noisescaleu" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="gblooddatax" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ambocc_cpv</Name>
+    <FileName>
+      <Item bucket="3">rdr2_bump_spec_ambocc_cpv.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ambocc_shareduv_character_cutscene</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump_spec_ambocc_shareduv_character_cutscene.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="normalmapsampler1" type="Texture" />
+      <Item name="normalmapsampler2" type="Texture" />
+      <Item name="animatednormalmapmask0sampler" type="Texture" />
+      <Item name="animatednormalmapmask1sampler" type="Texture" />
+      <Item name="animatednormalmapmask2sampler" type="Texture" />
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="detailmapsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="rimamount" type="float4" x="0.03" y="0" z="0" w="0" />
+      <Item name="rimpower" type="float4" x="2.7" y="0" z="0" w="0" />
+      <Item name="specularfresnelmax" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="specularfresnelmin" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfresnelexp" type="float4" x="2.163" y="0" z="0" w="0" />
+      <Item name="specdiffuseamount" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor2" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="specularfactor2" type="float4" x="22.9" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="20" y="0" z="0" w="0" />
+      <Item name="detailmapscale" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="detailmapscalev" type="float4" x="39" y="0" z="0" w="0" />
+      <Item name="detailmapscaleu" type="float4" x="54" y="0" z="0" w="0" />
+      <Item name="animnrmuvmodulate" type="float4" x="2" y="2" z="0" w="0" />
+      <Item name="animatednormalmapmod2" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="animatednormalmapmod1" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="ganimatednormalmapparams" type="float4x4" />
+      <Item name="gblooddatax" type="float4x4" />
+      <Item name="blursize" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="epidermiswieght" type="float4" x="0.2" y="0" z="0" w="0" />
+      <Item name="epidermiscolor" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="dermiswieght" type="float4" x="1.2" y="0" z="0" w="0" />
+      <Item name="dermiscolor" type="float4" x="0.8705" y="0.7725" z="0.7647" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha_bspec_ao_shareduv_character_cutscene</Name>
+    <FileName>
+      <Item bucket="2">rdr2_alpha_bspec_ao_shareduv_character_cutscene.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="normalmapsampler1" type="Texture" />
+      <Item name="normalmapsampler2" type="Texture" />
+      <Item name="animatednormalmapmask0sampler" type="Texture" />
+      <Item name="animatednormalmapmask1sampler" type="Texture" />
+      <Item name="animatednormalmapmask2sampler" type="Texture" />
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="detailmapsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularfresnelmax" type="float4" x="2.412" y="0" z="0" w="0" />
+      <Item name="specularfresnelmin" type="float4" x="1.848" y="0" z="0" w="0" />
+      <Item name="specularfresnelexp" type="float4" x="1.28" y="0" z="0" w="0" />
+      <Item name="specdiffuseamount" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="specularfactor2" type="float4" x="40" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="6.475" y="0" z="0" w="0" />
+      <Item name="detailmapscale" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="detailmapscalev" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="detailmapscaleu" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="animnrmuvmodulate" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="mainuvmodulate" type="float4" x="4" y="4" z="-3" w="-3" />
+      <Item name="animatednormalmapmod2" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="animatednormalmapmod1" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="ganimatednormalmapparams" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_clouds_fast</Name>
+    <FileName>
+      <Item bucket="5">rdr2_clouds_fast.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="densitysampler" type="Texture" />
+      <Item name="normalsampler" type="Texture" />
+      <Item name="lowresdensitysampler" type="Texture" />
+      <Item name="lowresnormalsampler" type="Texture" />
+      <Item name="grescaleuv3" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="grescaleuv2" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="grescaleuv1" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="guvoffset3" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset1" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset" type="float4x4" />
+      <Item name="gwraplighting_msaaref" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gscalediffusefillambient" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gpiercinglightpower_strength_normalstrength_thickness" type="float4" x="1" y="1" z="1" w="1" />
+      <Item name="gscatterg_gsquared_phasemult_scale" type="float4" x="-0.75" y="0.5625" z="2.1" w="1" />
+      <Item name="gdensityshiftscale" type="float4" x="0" y="1" z="0" w="0" />
+      <Item name="gbouncecolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gambientcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gcloudcolor" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gsuncolor" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gsundirection" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="westcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="eastcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="skycolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_clouds_animsoft</Name>
+    <FileName>
+      <Item bucket="5">rdr2_clouds_animsoft.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="densitysampler" type="Texture" />
+      <Item name="normalsampler" type="Texture" />
+      <Item name="detaildensitysampler" type="Texture" />
+      <Item name="detailnormalsampler" type="Texture" />
+      <Item name="detaildensity2sampler" type="Texture" />
+      <Item name="detailnormal2sampler" type="Texture" />
+      <Item name="lowresdensitysampler" type="Texture" />
+      <Item name="lowresnormalsampler" type="Texture" />
+      <Item name="gsoftparticlerange" type="float4" x="175" y="0" z="0" w="0" />
+      <Item name="grescaleuv3" type="float4" x="3" y="0.5" z="0" w="0" />
+      <Item name="grescaleuv2" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="grescaleuv1" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="guvoffset3" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset1" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset" type="float4x4" />
+      <Item name="ganimblendweights" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="ganimsculpt" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="ganimcombine" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gnearfarqmult" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gwraplighting_msaaref" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gscalediffusefillambient" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gpiercinglightpower_strength_normalstrength_thickness" type="float4" x="1" y="1" z="1" w="1" />
+      <Item name="gscatterg_gsquared_phasemult_scale" type="float4" x="-0.75" y="0.5625" z="2.1" w="1" />
+      <Item name="gdensityshiftscale" type="float4" x="0" y="1" z="0" w="0" />
+      <Item name="gbouncecolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gambientcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gcloudcolor" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gsuncolor" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gsundirection" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="westcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="eastcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="skycolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_glass_glow</Name>
+    <FileName>
+      <Item bucket="5">rdr2_glass_glow.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="glightsourcecolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gglowfuncscale" type="float4" x="10" y="0" z="0" w="0" />
+      <Item name="gglowfuncpower" type="float4" x="20" y="0" z="0" w="0" />
+      <Item name="gglowfuncshift" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gambientglowscale" type="float4" x="0.3" y="0" z="0" w="0" />
+      <Item name="glightsourcepos" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="glocallightposition" type="float4" x="0.003" y="0.064" z="0.592" w="0" />
+      <Item name="goverrideposition" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha_bspec_ao_shareduv</Name>
+    <FileName>
+      <Item bucket="3">rdr2_alpha_bspec_ao_shareduv.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <BlendWeights />
+        <BlendIndices />
+        <Normal />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_low_lod</Name>
+    <FileName>
+      <Item bucket="1">rdr2_low_lod.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="texturesampler2" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="dirtmapfactor" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump_spec_ao_dirt_cloth</Name>
+    <FileName>
+      <Item bucket="1">rdr2_bump_spec_ao_dirt_cloth.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="504403190327373831">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <TexCoord2 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="texturesampler2" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="dirtmapfactor" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_pond_water</Name>
+    <FileName>
+      <Item bucket="6">rdr2_pond_water.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="diffusesampler" type="Texture" />
+      <Item name="wavesampler" type="Texture" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="waterparams" type="float4" x="0.106" y="0.905" z="0" w="0" />
+      <Item name="rippleparams" type="float4" x="0.884" y="0.051" z="0.15" w="0.441" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_layer_2_nospec_ambocc_decal</Name>
+    <FileName>
+      <Item bucket="0">rdr2_layer_2_nospec_ambocc_decal.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <TexCoord2 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="texturesampler3" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="30" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_scope_lens</Name>
+    <FileName>
+      <Item bucket="0">rdr2_scope_lens.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="luminance" type="float4" x="0.2125" y="0.7154" z="0.0721" w="0" />
+      <Item name="contrast" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="colorcorrect" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="constadd" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="WcFIIDA_0xB98E13F7" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_scope_barrel</Name>
+    <FileName>
+      <Item bucket="0">rdr2_scope_barrel.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="luminance" type="float4" x="0.2125" y="0.7154" z="0.0721" w="0" />
+      <Item name="contrast" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="colorcorrect" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="constadd" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="WcFIIDA_0xB98E13F7" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="lensworldpos" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="mainglow" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="targetpos2" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="targeti2" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="targetpos1" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="targeti1" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="targetpos0" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="targeti0" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_glass_notint</Name>
+    <FileName>
+      <Item bucket="6">rdr2_glass_notint.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="amboccsunfactor" type="float4" x="0.1" y="0" z="0" w="0" />
+      <Item name="amboccfillfactor" type="float4" x="0.9" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_layer_3_nospec_normal_ambocc</Name>
+    <FileName>
+      <Item bucket="0">rdr2_layer_3_nospec_normal_ambocc.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <TexCoord2 />
+        <TexCoord3 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="texturesampler2" type="Texture" />
+      <Item name="texturesampler3" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="amboccsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="30" y="0" z="0" w="0" />
+      <Item name="speculardirtmapmax" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="speculardirtmapmin" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="speculardirtmapoffset" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="speculardirtmapinfluence" type="float4" x="-1" y="0" z="0" w="0" />
+      <Item name="dirtmapfactor" type="float4" x="0.8" y="0" z="0" w="0" />
+      <Item name="fresnelterm" type="float4" x="0.9" y="0" z="0" w="0" />
+      <Item name="speculargreenbias" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="speculargreenscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_bump</Name>
+    <FileName>
+      <Item bucket="0">rdr2_bump.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_clouds_fog</Name>
+    <FileName>
+      <Item bucket="5">rdr2_clouds_fog.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="densitysampler" type="Texture" />
+      <Item name="normalsampler" type="Texture" />
+      <Item name="gsoftparticlerange" type="float4" x="175" y="0" z="0" w="0" />
+      <Item name="grescaleuv3" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="grescaleuv2" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="grescaleuv1" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="guvoffset3" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset1" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="guvoffset" type="float4x4" />
+      <Item name="gnearfarqmult" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gwraplighting_msaaref" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gscalediffusefillambient" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gpiercinglightpower_strength_normalstrength_thickness" type="float4" x="1" y="1" z="1" w="1" />
+      <Item name="gdensityshiftscale" type="float4" x="0" y="1" z="0" w="0" />
+      <Item name="gbouncecolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gambientcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="gcloudcolor" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gsuncolor" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="gsundirection" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="westcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="eastcolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="skycolor" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_alpha_foliage_no_fade</Name>
+    <FileName>
+      <Item bucket="3">rdr2_alpha_foliage_no_fade.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <Colour1 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_traintrack</Name>
+    <FileName>
+      <Item bucket="0">rdr2_traintrack.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="specsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_terrain_blend</Name>
+    <FileName>
+      <Item bucket="0">rdr2_terrain_blend.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_2">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <Colour1 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+        <Binormal />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="terraindiffusesampler1" type="Texture" />
+      <Item name="terraindiffusesampler2" type="Texture" />
+      <Item name="terraindiffusesampler3" type="Texture" />
+      <Item name="terraindiffusesampler4" type="Texture" />
+      <Item name="terraindiffusesampler5" type="Texture" />
+      <Item name="terraindiffusesampler6" type="Texture" />
+      <Item name="terrainnormalsampler1" type="Texture" />
+      <Item name="terrainnormalsampler2" type="Texture" />
+      <Item name="terrainnormalsampler3" type="Texture" />
+      <Item name="terrainnormalsampler4" type="Texture" />
+      <Item name="terrainnormalsampler5" type="Texture" />
+      <Item name="terrainnormalsampler6" type="Texture" />
+      <Item name="terrainblendmap1" type="Texture" />
+      <Item name="terrainblendmap2" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="directstrength" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="terrainamboccfillfactor" type="float4" x="0.85" y="0" z="0" w="0" />
+      <Item name="terrainamboccsunfactor" type="float4" x="0.2" y="0" z="0" w="0" />
+      <Item name="amboccstrength" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="minbumpselfshadow" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="megatexbump456" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="megatexbump123" type="float4" x="0.75" y="0" z="0" w="0" />
+      <Item name="megatexspecularexponent456" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="megatexspecularexponent123" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="megatexspecularintensity456" type="float4" x="0.05" y="0.05" z="0.05" w="0" />
+      <Item name="megatexspecularintensity123" type="float4" x="0.05" y="0.05" z="0.05" w="0" />
+      <Item name="megatexspecularintensityscale2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="megatexspecularintensityscale1" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="blendmapoffset2" type="float4" x="0" y="-0.414062" z="0" w="0" />
+      <Item name="blendmapscale2" type="float4" x="3.640625" y="1.820313" z="0" w="0" />
+      <Item name="blendmapoffset1" type="float4" x="0" y="-0.414062" z="0" w="0" />
+      <Item name="blendmapscale1" type="float4" x="3.640625" y="1.820313" z="0" w="0" />
+      <Item name="megatileoffset" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="megatilerepetitions" type="float4" x="192" y="192" z="0" w="0" />
+      <Item name="bumpiness_terrain456" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="bumpiness_terrain123" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="detailnormalmapscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscalev" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscaleu" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="bumpselfshadowamount" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_cliffwall_ao</Name>
+    <FileName>
+      <Item bucket="0">rdr2_cliffwall_ao.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_2">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+        <Binormal />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="terrainblendmap1" type="Texture" />
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="megatexspecularintensityscale2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="megatexspecularintensityscale1" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.05" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="blendmapoffsetcliff" type="float4" x="0" y="-0.414062" z="0" w="0" />
+      <Item name="blendmapscalecliff" type="float4" x="3.640625" y="1.820313" z="0" w="0" />
+      <Item name="detailnormalmapscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscalev" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscaleu" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="bumpselfshadowamount" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_terrain</Name>
+    <FileName>
+      <Item bucket="0">rdr2_terrain.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_2">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="terraindiffusesampler1" type="Texture" />
+      <Item name="terraindiffusesampler2" type="Texture" />
+      <Item name="terraindiffusesampler3" type="Texture" />
+      <Item name="terraindiffusesampler4" type="Texture" />
+      <Item name="terraindiffusesampler5" type="Texture" />
+      <Item name="terraindiffusesampler6" type="Texture" />
+      <Item name="terrainnormalsampler1" type="Texture" />
+      <Item name="terrainnormalsampler2" type="Texture" />
+      <Item name="terrainnormalsampler3" type="Texture" />
+      <Item name="terrainnormalsampler4" type="Texture" />
+      <Item name="terrainnormalsampler5" type="Texture" />
+      <Item name="terrainnormalsampler6" type="Texture" />
+      <Item name="terrainblendmap1" type="Texture" />
+      <Item name="terrainblendmap2" type="Texture" />
+      <Item name="directstrength" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="terrainamboccfillfactor" type="float4" x="0.85" y="0" z="0" w="0" />
+      <Item name="terrainamboccsunfactor" type="float4" x="0.2" y="0" z="0" w="0" />
+      <Item name="amboccstrength" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="minbumpselfshadow" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="megatexbump456" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="megatexbump123" type="float4" x="0.75" y="0" z="0" w="0" />
+      <Item name="megatexspecularexponent456" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="megatexspecularexponent123" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="megatexspecularintensity456" type="float4" x="0.05" y="0.05" z="0.05" w="0" />
+      <Item name="megatexspecularintensity123" type="float4" x="0.05" y="0.05" z="0.05" w="0" />
+      <Item name="megatexspecularintensityscale2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="megatexspecularintensityscale1" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="blendmapoffset2" type="float4" x="0" y="-0.414062" z="0" w="0" />
+      <Item name="blendmapscale2" type="float4" x="3.640625" y="1.820313" z="0" w="0" />
+      <Item name="blendmapoffset1" type="float4" x="0" y="-0.414062" z="0" w="0" />
+      <Item name="blendmapscale1" type="float4" x="3.640625" y="1.820313" z="0" w="0" />
+      <Item name="megatileoffset" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="megatilerepetitions" type="float4" x="192" y="192" z="0" w="0" />
+      <Item name="bumpiness_terrain456" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="bumpiness_terrain123" type="float4" x="1" y="1" z="1" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_river_water</Name>
+    <FileName>
+      <Item bucket="4">rdr2_river_water.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="flowsampler" type="Texture" />
+      <Item name="riverfoamsampler" type="Texture" />
+      <Item name="foamanimsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="dwavedistancefalloffj" type="float4" x="50" y="50" z="0" w="0" />
+      <Item name="dwavedistancefalloff" type="float4" x="50" y="0" z="0" w="0" />
+      <Item name="dwavenoisemagnitudej" type="float4" x="0.002" y="0.002" z="0" w="0" />
+      <Item name="dwavenoisemagnitude" type="float4" x="0.002" y="0" z="0" w="0" />
+      <Item name="dwavenoisedtj" type="float4" x="0.008" y="0.008" z="0" w="0" />
+      <Item name="dwavenoisedt" type="float4" x="0.008" y="0" z="0" w="0" />
+      <Item name="dwavenoisescalej" type="float4" x="0.003" y="0.003" z="0" w="0" />
+      <Item name="dwavenoisescale" type="float4" x="0.003" y="0" z="0" w="0" />
+      <Item name="dwavedirection2" type="float4" x="-1" y="1.1" z="0" w="0" />
+      <Item name="dwaveamp2" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="dwaveperiod2" type="float4" x="2.1" y="0" z="0" w="0" />
+      <Item name="dwavedirection1" type="float4" x="-1" y="1" z="0" w="0" />
+      <Item name="dwaveamp1" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="dwaveperiod1" type="float4" x="3" y="0" z="0" w="0" />
+      <Item name="jELjlNA_0x66224BDC" type="float4" x="0.02037" y="0" z="0" w="0" />
+      <Item name="refractionindex" type="float4" x="0.75" y="0" z="0" w="0" />
+      <Item name="refractiondepthscalar" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="waterloduvscalesfoam" type="float4" x="7" y="3.5" z="0" w="0" />
+      <Item name="waterloduvoffsetsfoam" type="float4" x="-0.9375" y="-0.84375" z="0" w="0" />
+      <Item name="waterloduvscalesflow" type="float4" x="7" y="3.5" z="0" w="0" />
+      <Item name="waterloduvoffsetsflow" type="float4" x="-0.9375" y="-0.84375" z="0" w="0" />
+      <Item name="waterloduvscalesfog" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="waterloduvoffsetsfog" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="ripplespeed" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="ripplescale" type="float4" x="2.3" y="0" z="0" w="0" />
+      <Item name="rippleflowamplitude" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="rippleamplitude" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="foamspecularexponent" type="float4" x="60" y="0" z="0" w="0" />
+      <Item name="foamspecularintensity" type="float4" x="0.05" y="0" z="0" w="0" />
+      <Item name="foamambientintensity" type="float4" x="0.05" y="0" z="0" w="0" />
+      <Item name="foambumpamplitude" type="float4" x="0.2" y="0" z="0" w="0" />
+      <Item name="foamflowexponent" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="foamcutoffwidth" type="float4" x="0.6" y="0" z="0" w="0" />
+      <Item name="foamcutoff" type="float4" x="0.42" y="0" z="0" w="0" />
+      <Item name="foamspeed" type="float4" x="0.5" y="0" z="0" w="0" />
+      <Item name="foamscale" type="float4" x="5" y="0" z="0" w="0" />
+      <Item name="foamwraplight" type="float4" x="0.7" y="0" z="0" w="0" />
+      <Item name="depthblendbias" type="float4" x="1.94" y="0" z="0" w="0" />
+      <Item name="specularskyworldblend" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="specexponent" type="float4" x="123.952" y="0" z="0" w="0" />
+      <Item name="specularintensity" type="float4" x="5.1" y="0" z="0" w="0" />
+      <Item name="reflectionintensity" type="float4" x="0.84" y="0" z="0" w="0" />
+      <Item name="reflectiondistortion" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="fresnelfalloff" type="float4" x="6" y="0" z="0" w="0" />
+      <Item name="fresnelstrength" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="waterfogclarity" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="waterfogdensity" type="float4" x="0.3" y="0" z="0" w="0" />
+      <Item name="currenttime" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="g" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_cliffwall_alpha</Name>
+    <FileName>
+      <Item bucket="3">rdr2_cliffwall_alpha.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_2">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <Colour1 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+        <Binormal />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.05" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="bumpselfshadowamount" type="float4" x="0.25" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_river_water_joint</Name>
+    <FileName>
+      <Item bucket="4">rdr2_river_water_joint.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="flowsampler" type="Texture" />
+      <Item name="riverfoamsampler" type="Texture" />
+      <Item name="foamanimsampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="dwavedistancefalloffj" type="float4" x="50" y="50" z="0" w="0" />
+      <Item name="dwavedistancefalloff" type="float4" x="50" y="0" z="0" w="0" />
+      <Item name="dwavenoisemagnitudej" type="float4" x="0.01" y="0.002" z="0" w="0" />
+      <Item name="dwavenoisemagnitude" type="float4" x="0.002" y="0" z="0" w="0" />
+      <Item name="dwavenoisedtj" type="float4" x="0" y="0.008" z="0" w="0" />
+      <Item name="dwavenoisedt" type="float4" x="0.008" y="0" z="0" w="0" />
+      <Item name="dwavenoisescalej" type="float4" x="0.5" y="1000" z="0" w="0" />
+      <Item name="dwavenoisescale" type="float4" x="0.003" y="0" z="0" w="0" />
+      <Item name="dwavedirection2" type="float4" x="-1" y="0" z="0" w="0" />
+      <Item name="dwaveamp2" type="float4" x="0.01" y="0" z="0" w="0" />
+      <Item name="dwaveperiod2" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="dwavedirection1" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="dwaveamp1" type="float4" x="0.15" y="0" z="0" w="0" />
+      <Item name="dwaveperiod1" type="float4" x="1.5" y="0" z="0" w="0" />
+      <Item name="jELjlNA_0x66224BDC" type="float4" x="0.02037" y="0" z="0" w="0" />
+      <Item name="refractionindex" type="float4" x="0.75" y="0" z="0" w="0" />
+      <Item name="refractiondepthscalar" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="waterloduvscalesfoam" type="float4" x="3.5" y="3.5" z="0" w="0" />
+      <Item name="waterloduvoffsetsfoam" type="float4" x="-0.25" y="0" z="0" w="0" />
+      <Item name="waterloduvscalesflow" type="float4" x="3.5" y="3.5" z="0" w="0" />
+      <Item name="waterloduvoffsetsflow" type="float4" x="-0.25" y="0" z="0" w="0" />
+      <Item name="waterloduvscalesfog" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="waterloduvoffsetsfog" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="ripplespeedj" type="float4" x="1" y="0.15" z="0" w="0" />
+      <Item name="ripplescalej" type="float4" x="5" y="5" z="0" w="0" />
+      <Item name="rippleflowamplitudej" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="rippleamplitudej" type="float4" x="0.09" y="2" z="0" w="0" />
+      <Item name="foamspecularexponentj" type="float4" x="15" y="30" z="0" w="0" />
+      <Item name="foamspecularintensityj" type="float4" x="3" y="3" z="0" w="0" />
+      <Item name="foamambientintensityj" type="float4" x="0.3" y="0.2" z="0" w="0" />
+      <Item name="foambumpamplitudej" type="float4" x="0.1" y="0.05" z="0" w="0" />
+      <Item name="foamflowexponentj" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="foamcutoffwidthj" type="float4" x="0.4" y="0.335" z="0" w="0" />
+      <Item name="foamcutoffj" type="float4" x="0.15" y="0.234" z="0" w="0" />
+      <Item name="foamspeedj" type="float4" x="5" y="2" z="0" w="0" />
+      <Item name="foamscalej" type="float4" x="20" y="14" z="0" w="0" />
+      <Item name="foamwraplight" type="float4" x="0.7" y="0" z="0" w="0" />
+      <Item name="depthblendbiasj" type="float4" x="1.6" y="1" z="0" w="0" />
+      <Item name="specularskyworldblend" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="specexponentj" type="float4" x="40" y="256" z="0" w="0" />
+      <Item name="specularintensityj" type="float4" x="2" y="2" z="0" w="0" />
+      <Item name="reflectionintensityj" type="float4" x="0.3" y="0.4" z="0" w="0" />
+      <Item name="reflectiondistortionj" type="float4" x="0.2" y="0.175" z="0" w="0" />
+      <Item name="fresnelfalloffj" type="float4" x="2" y="1" z="0" w="0" />
+      <Item name="fresnelstrength" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="waterfogclarityj" type="float4" x="1" y="1.2" z="0" w="0" />
+      <Item name="waterfogdensityj" type="float4" x="0.3" y="0.4" z="0" w="0" />
+      <Item name="_ambientcutoffv" type="float4" x="0.35" y="0.2" z="0" w="0" />
+      <Item name="currenttime" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="g" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_flattenterrain</Name>
+    <FileName>
+      <Item bucket="0">rdr2_flattenterrain.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_2">
+        <Position />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="detailsampler" type="Texture" />
+      <Item name="detailnormalmapsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscalev" type="float4" x="192" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscaleu" type="float4" x="192" y="0" z="0" w="0" />
+      <Item name="detailmapscale" type="float4" x="0.65" y="0" z="0" w="0" />
+      <Item name="detailmapuvscale" type="float4" x="192" y="192" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="cutflattenbumpoffset" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="cutflattenbumpscale" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="cutflattendiffuseoffset" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="cutflattendiffusescale" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_cliffwall_ao_low_lod</Name>
+    <FileName>
+      <Item bucket="0">rdr2_cliffwall_ao_low_lod.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_2">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+        <Binormal />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="flattenbumpsampler" type="Texture" />
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="megatexspecularintensityscale2" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="megatexspecularintensityscale1" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.05" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="blendmapoffsetcliffflatten" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="blendmapscalecliffflatten" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="detailnormalmapscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscalev" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscaleu" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="bumpselfshadowamount" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_flattenterrain_blend</Name>
+    <FileName>
+      <Item bucket="0">rdr2_flattenterrain_blend.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_2">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <Colour1 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+        <Binormal />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="flattentexturesampler" type="Texture" />
+      <Item name="flattenbumpsampler" type="Texture" />
+      <Item name="flattendetailsampler" type="Texture" />
+      <Item name="flattendetailnormalmapsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscale" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscalev" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscaleu" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscaleflatten" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscalevflatten" type="float4" x="192" y="0" z="0" w="0" />
+      <Item name="detailnormalmapscaleuflatten" type="float4" x="192" y="0" z="0" w="0" />
+      <Item name="detailmapscaleflatten" type="float4" x="0.65" y="0" z="0" w="0" />
+      <Item name="detailmapuvscaleflatten" type="float4" x="192" y="192" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="18" y="0" z="0" w="0" />
+      <Item name="bumpinessflatten" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="cutflattenblendbumpoffset" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="cutflattenblendbumpscale" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="cutflattenblenddiffuseoffset" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="cutflattenblenddiffusescale" type="float4" x="1" y="1" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_terrain_low_lod</Name>
+    <FileName>
+      <Item bucket="0">rdr2_terrain_low_lod.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="12317044740877557770">
+        <Position />
+        <Normal />
+        <Colour0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="tilecenterpos" type="float4" x="-2559.7893" y="314.60107" z="511.83228" w="528" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_low_lod_nodirt</Name>
+    <FileName>
+      <Item bucket="1">rdr2_low_lod_nodirt.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_window_glow</Name>
+    <FileName>
+      <Item bucket="8">rdr2_window_glow.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="gcameradistanceatmaxdisplacement" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="gmaxdisplacement" type="float4" x="0.3" y="0" z="0" w="0" />
+      <Item name="keyframeindex" type="float4" x="0" y="0" z="0" w="0" />
+      <Item name="endfadedist" type="float4" x="2" y="0" z="0" w="0" />
+      <Item name="beginfadedist" type="float4" x="15" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_door_glow</Name>
+    <FileName>
+      <Item bucket="8">rdr2_door_glow.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="gsoftparticlerange" type="float4" x="1.5" y="0" z="0" w="0" />
+      <Item name="gcameradistanceatmaxdisplacement" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="gmaxdisplacement" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="keyframeindex" type="float4" x="4" y="0" z="0" w="0" />
+      <Item name="endfadedist" type="float4" x="15" y="0" z="0" w="0" />
+      <Item name="beginfadedist" type="float4" x="8" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_graffiti</Name>
+    <FileName>
+      <Item bucket="3">rdr2_graffiti.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="gcameradistanceatmaxdisplacement" type="float4" x="100" y="0" z="0" w="0" />
+      <Item name="gmaxdisplacement" type="float4" x="0.4" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_low_lod_nodirt_singlesided</Name>
+    <FileName>
+      <Item bucket="0">rdr2_low_lod_nodirt_singlesided.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_1">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <Tangent />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+  <Item>
+    <Name>rdr2_cliffwall</Name>
+    <FileName>
+      <Item bucket="0">rdr2_cliffwall.sps</Item>
+    </FileName>
+    <Layout>
+      <Item type="RDR1_2">
+        <Position />
+        <Normal />
+        <Colour0 />
+        <TexCoord0 />
+        <TexCoord1 />
+        <Tangent />
+        <Binormal />
+      </Item>
+    </Layout>
+    <Parameters>
+      <Item name="texturesampler" type="Texture" />
+      <Item name="bumpsampler" type="Texture" />
+      <Item name="colors" type="float4x4" />
+      <Item name="bumpiness" type="float4" x="1" y="0" z="0" w="0" />
+      <Item name="specularcolorfactor" type="float4" x="0.1" y="0" z="0" w="0" />
+      <Item name="specularfactor" type="float4" x="65" y="0" z="0" w="0" />
+      <Item name="physicsmaterial" type="float4" x="0" y="0" z="0" w="0" />
+    </Parameters>
+  </Item>
+</Shaders>
