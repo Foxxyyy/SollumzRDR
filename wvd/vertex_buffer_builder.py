@@ -141,7 +141,12 @@ class VertexBufferBuilder:
     def _get_normals(self):
         normals = np.empty(len(self.mesh.loops) * 3, dtype=np.float32)
         self.mesh.loops.foreach_get("normal", normals)
-        return np.reshape(normals, (len(self.mesh.loops), 3))
+        
+        processed_normal = np.zeros((len(self.mesh.loops), 4), dtype=np.float32)
+        processed_normal[:, :3] = np.reshape(normals, (len(self.mesh.loops), 3))
+        condition = processed_normal[:, 2] < 0
+        processed_normal[:, 3] = np.where(condition, -1, 0)
+        return processed_normal
 
     def _get_weights_indices(self) -> Tuple[NDArray[np.uint32], NDArray[np.uint32]]:
         """Get all BlendWeights and BlendIndices."""
@@ -266,4 +271,4 @@ class VertexBufferBuilder:
         tangents = np.reshape(tangents, (num_loops, 3))
         bitangent_signs = np.reshape(bitangent_signs, (-1, 1))
 
-        return tangents
+        return np.concatenate((tangents, bitangent_signs), axis=1)
