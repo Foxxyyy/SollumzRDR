@@ -290,7 +290,7 @@ def get_object_with_children(obj):
     return objs
 
 
-def create_blender_object(sollum_type: SollumType, name: Optional[str] = None, object_data: Optional[bpy.types.Mesh] = None, sollum_game_type: SollumzGame = SollumzGame.GTA) -> bpy.types.Object:
+def create_blender_object(sollum_type: SollumType, name: Optional[str] = None, object_data: Optional[bpy.types.Mesh] = None, sollum_game_type: SollumzGame = SollumzGame.RDR1) -> bpy.types.Object:
     """Create a bpy object of the given sollum type and link it to the scene."""
     name = name or SOLLUMZ_UI_NAMES[sollum_type]
     object_data = object_data or bpy.data.meshes.new(name)
@@ -302,7 +302,7 @@ def create_blender_object(sollum_type: SollumType, name: Optional[str] = None, o
     return obj
 
 
-def create_empty_object(sollum_type: SollumType, name: Optional[str] = None, sollum_game_type: SollumzGame = SollumzGame.GTA) -> bpy.types.Object:
+def create_empty_object(sollum_type: SollumType, name: Optional[str] = None, sollum_game_type: SollumzGame = SollumzGame.RDR1) -> bpy.types.Object:
     """Create a bpy empty object of the given sollum type and link it to the scene."""
     name = name or SOLLUMZ_UI_NAMES[sollum_type]
     obj = bpy.data.objects.new(name, None)

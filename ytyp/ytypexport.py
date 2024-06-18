@@ -10,7 +10,7 @@ from .properties.ytyp import ArchetypeProperties, TimecycleModifierProperties, R
 from .properties.extensions import ExtensionProperties
 from ..cwxml import ytyp
 
-current_game = SollumzGame.GTA
+current_game = SollumzGame.RDR1
 
 def set_room_attached_objects(room_xml: ytypxml.Room, room_index: int, entities: Iterable[MloEntityProperties]):
     """Set attached objects of room from the mlo archetype entities collection provided."""

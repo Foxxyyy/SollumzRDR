@@ -209,8 +209,6 @@ class VehiclePaintLayer(str, Enum):
 
 class SollumzGame(str, Enum):
     UNIVERSAL = "sollumz_universal"
-    GTA = "sollumz_gta5"
-    RDR = "sollumz_rdr3"
     RDR1 = "sollumz_rdr2"
 
 
@@ -335,9 +333,7 @@ SOLLUMZ_UI_NAMES = {
     SollumType.YMAP_CAR_GENERATOR: "Car Generator",
     
     SollumzGame.UNIVERSAL: "Universal",
-    SollumzGame.GTA: "GTA 5",
     SollumzGame.RDR1: "RDR 1",
-    SollumzGame.RDR: "RDR 2",
 
     MaterialType.NONE: "None",
     MaterialType.SHADER: "Sollumz Material",
@@ -640,14 +636,14 @@ def register():
     bpy.types.Object.sollum_game_type = bpy.props.EnumProperty(
         items=items_from_enums(SollumzGame),
         name="Sollumz Game",
-        default=SollumzGame.GTA,
+        default=SollumzGame.RDR1,
         options={"HIDDEN"}
     )
 
     bpy.types.Scene.sollum_game_type = bpy.props.EnumProperty(
         items=items_from_enums(SollumzGame),
         name="Sollumz Game",
-        default=SollumzGame.GTA,
+        default=SollumzGame.RDR1,
         options={"HIDDEN"},
         update=updateSceneSollumzGame
     )

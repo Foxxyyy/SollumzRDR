@@ -1,1 +1,1 @@
-"""Interface for managing CodeWalker XML files in an object oriented way."""
+"""Interface for managing CodeX XML files in an object oriented way."""

@@ -251,7 +251,7 @@ class CMapTypesProperties(bpy.types.PropertyGroup):
 
     name: bpy.props.StringProperty(name="Name")
     game: bpy.props.EnumProperty(
-        items=items_from_enums(SollumzGame), name="Game", default=SollumzGame.GTA)
+        items=items_from_enums(SollumzGame), name="Game", default=SollumzGame.RDR1)
     all_texture_dictionary: bpy.props.StringProperty(
         name="Texture Dictionary: ")
     all_lod_dist: bpy.props.FloatProperty(name="Lod Distance: ")

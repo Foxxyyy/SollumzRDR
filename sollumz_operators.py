@@ -10,34 +10,12 @@ from mathutils import Matrix, Quaternion
 from .sollumz_helper import SOLLUMZ_OT_base, find_sollumz_parent
 from .sollumz_properties import SollumType, SOLLUMZ_UI_NAMES, BOUND_TYPES, TimeFlags, ArchetypeType, LODLevel
 from .sollumz_preferences import get_export_settings
-from .cwxml.drawable import WFD, WVD, YDR, YDD
-from .cwxml.fragment import YFT
-from .cwxml.bound import YBN
-from .cwxml.navmesh import YNV
-from .cwxml.clipdictionary import YCD
-from .cwxml.ytyp import YTYP
-from .cwxml.ymap import YMAP
-from .ydr.ydrimport import import_ydr
-from .ydr.ydrexport import export_ydr
-from .ydd.yddimport import import_ydd
-from .ydd.yddexport import export_ydd
-from .yft.yftimport import import_yft
-from .yft.yftexport import export_yft
-from .ybn.ybnimport import import_ybn
-from .ybn.ybnexport import export_ybn
-from .ynv.ynvimport import import_ynv
-from .ycd.ycdimport import import_ycd
-from .ycd.ycdexport import export_ycd
-from .ymap.ymapimport import import_ymap
-from .ymap.ymapexport import export_ymap
+from .cwxml.drawable import WFD, WVD
 from .wvd.wvdimport import import_wvd
 from .wvd.wvdexport import export_wvd
 from .wfd.wfdimport import import_wfd
 from .wfd.wfdexport import export_wfd
 from .tools.blenderhelper import add_child_of_bone_constraint, get_child_of_pose_bone, get_terrain_texture_brush, remove_number_suffix, create_blender_object, join_objects
-from .tools.ytyphelper import ytyp_from_objects
-from .ybn.properties import BoundProperties
-from .ybn.properties import BoundFlags
 
 from . import logger
 
@@ -60,9 +38,9 @@ class TimedOperator:
 
 
 class SOLLUMZ_OT_import(bpy.types.Operator, ImportHelper, TimedOperator):
-    """Imports xml files exported by codewalker"""
+    """Imports xml files exported by CodeX"""
     bl_idname = "sollumz.import"
-    bl_label = "Import Codewalker XML"
+    bl_label = "Import CodeX XML"
     bl_options = {"UNDO"}
 
     files: bpy.props.CollectionProperty(
@@ -72,7 +50,7 @@ class SOLLUMZ_OT_import(bpy.types.Operator, ImportHelper, TimedOperator):
     )
 
     filter_glob: bpy.props.StringProperty(
-        default=f"*{YDR.file_extension};*{YDD.file_extension};*{YFT.file_extension};*{YBN.file_extension};*{YNV.file_extension};*{YCD.file_extension};*{YMAP.file_extension};*{WVD.file_extension};*{WFD.file_extension};",
+        default=f"*{WVD.file_extension};*{WFD.file_extension};",
         options={"HIDDEN", "SKIP_SAVE"},
         maxlen=255,
     )
@@ -93,21 +71,7 @@ class SOLLUMZ_OT_import(bpy.types.Operator, ImportHelper, TimedOperator):
 
             try:
 
-                if YDR.file_extension in filepath:
-                    import_ydr(filepath)
-                elif YDD.file_extension in filepath:
-                    import_ydd(filepath)
-                elif YFT.file_extension in filepath:
-                    import_yft(filepath)
-                elif YBN.file_extension in filepath:
-                    import_ybn(filepath)
-                elif YNV.file_extension in filepath:
-                    import_ynv(filepath)
-                elif YCD.file_extension in filepath:
-                    import_ycd(filepath)
-                elif YMAP.file_extension in filepath:
-                    import_ymap(filepath)
-                elif WVD.file_extension in filepath:
+                if WVD.file_extension in filepath:
                     import_wvd(filepath)
                 elif WFD.file_extension in filepath:
                     import_wfd(filepath)
@@ -128,12 +92,12 @@ class SOLLUMZ_OT_import(bpy.types.Operator, ImportHelper, TimedOperator):
 
 
 class SOLLUMZ_OT_export(bpy.types.Operator, TimedOperator):
-    """Exports codewalker xml files"""
+    """Exports CodeX xml files"""
     bl_idname = "sollumz.export"
-    bl_label = "Export Codewalker XML"
+    bl_label = "Export CodeX XML"
 
     filter_glob: bpy.props.StringProperty(
-        default=f"*{YDR.file_extension};*{YDD.file_extension};*{YFT.file_extension};*{YBN.file_extension};*{YCD.file_extension};*{YMAP.file_extension};*{WVD.file_extension};*{WFD.file_extension};",
+        default=f"*{WVD.file_extension};*{WFD.file_extension};",
         options={"HIDDEN", "SKIP_SAVE"},
         maxlen=255,
     )
@@ -180,25 +144,7 @@ class SOLLUMZ_OT_export(bpy.types.Operator, TimedOperator):
             filepath = None
             try:
                 success = False
-                if obj.sollum_type == SollumType.DRAWABLE:
-                    filepath = self.get_filepath(obj, YDR.file_extension)
-                    success = export_ydr(obj, filepath)
-                elif obj.sollum_type == SollumType.DRAWABLE_DICTIONARY:
-                    filepath = self.get_filepath(obj, YDD.file_extension)
-                    success = export_ydd(obj, filepath)
-                elif obj.sollum_type == SollumType.FRAGMENT:
-                    filepath = self.get_filepath(obj, YFT.file_extension)
-                    success = export_yft(obj, filepath)
-                elif obj.sollum_type == SollumType.CLIP_DICTIONARY:
-                    filepath = self.get_filepath(obj, YCD.file_extension)
-                    success = export_ycd(obj, filepath)
-                elif obj.sollum_type in BOUND_TYPES:
-                    filepath = self.get_filepath(obj, YBN.file_extension)
-                    success = export_ybn(obj, filepath)
-                elif obj.sollum_type == SollumType.YMAP:
-                    filepath = self.get_filepath(obj, YMAP.file_extension)
-                    success = export_ymap(obj, filepath)
-                elif obj.sollum_type == SollumType.VISUAL_DICTIONARY:
+                if obj.sollum_type == SollumType.VISUAL_DICTIONARY:
                     filepath = self.get_filepath(obj, WVD.file_extension)
                     success = export_wvd(obj, filepath)
                 elif obj.sollum_type == SollumType.FRAG_DRAWABLE:
@@ -214,14 +160,6 @@ class SOLLUMZ_OT_export(bpy.types.Operator, TimedOperator):
                             f"Error exporting: {filepath or obj.name} \n {traceback.format_exc()}")
 
                 return {"CANCELLED"}
-
-            if export_settings.export_with_ytyp:
-                ytyp = ytyp_from_objects(objs)
-                filepath = os.path.join(
-                    self.directory, f"{ytyp.name}.ytyp.xml")
-                ytyp.write_xml(filepath)
-                self.report(
-                    {"INFO"}, f"Successfully exported '{filepath}' (auto-generated)")
 
         self.report(
             {"INFO"}, f"Exported in {self.time_elapsed} seconds")
@@ -400,12 +338,12 @@ class ClearTimeFlags(SOLLUMZ_OT_base):
 
 def sollumz_menu_func_import(self, context):
     self.layout.operator(SOLLUMZ_OT_import.bl_idname,
-                         text=f"Codewalker XML({YDR.file_extension}, {YDD.file_extension}, {YFT.file_extension}, {YBN.file_extension}, {YCD.file_extension}, {WVD.file_extension}, {WFD.file_extension})")
+                         text=f"CodeX XML({WVD.file_extension}, {WFD.file_extension})")
 
 
 def sollumz_menu_func_export(self, context):
     self.layout.operator(SOLLUMZ_OT_export.bl_idname,
-                         text=f"Codewalker XML({YDR.file_extension}, {YDD.file_extension}, {YFT.file_extension}, {YBN.file_extension}, {YCD.file_extension}, {WVD.file_extension}, {WFD.file_extension})")
+                         text=f"CodeX XML({WVD.file_extension}, {WFD.file_extension})")
 
 
 class SOLLUMZ_OT_debug_hierarchy(bpy.types.Operator):
@@ -568,7 +506,8 @@ class SOLLUMZ_OT_paste_location(bpy.types.Operator):
             self.report({'ERROR'}, "Invalid location string.")
 
         return {'FINISHED'}
-    
+
+
 class SOLLUMZ_OT_paste_rotation(bpy.types.Operator):
     """Paste the rotation (as quaternion) of an object from the clipboard and apply it"""
     bl_idname = "wm.sollumz_paste_rotation"
@@ -591,6 +530,7 @@ class SOLLUMZ_OT_paste_rotation(bpy.types.Operator):
         else:
             self.report({"ERROR"}, "Invalid rotation quaternion string.")
         return {"FINISHED"}
+
 
 def parse_rotation_string(rotation_string):
     values = rotation_string.split(",")
@@ -735,23 +675,6 @@ class SOLLUMZ_OT_debug_migrate_bound_geometries(bpy.types.Operator):
             bpy.data.objects.remove(obj)
 
         return {"FINISHED"}
-
-    def set_bound_geometry_properties(self, old_obj: bpy.types.Object, new_obj: bpy.types.Object):
-        for prop_name in BoundProperties.__annotations__.keys():
-            value = getattr(old_obj.bound_properties, prop_name)
-            setattr(new_obj.bound_properties, prop_name, value)
-
-    def set_composite_flags(self, old_obj: bpy.types.Object, new_obj: bpy.types.Object):
-        def set_flags(prop_name: str):
-            flags_props = getattr(old_obj, prop_name)
-            new_flags_props = getattr(new_obj, prop_name)
-
-            for flag_name in BoundFlags.__annotations__.keys():
-                value = getattr(flags_props, flag_name)
-                setattr(new_flags_props, flag_name, value)
-
-        set_flags("composite_flags1")
-        set_flags("composite_flags2")
 
     def set_shape_keys(self, bound_obj: bpy.types.Object, damaged_obj: bpy.types.Object):
         bound_obj.shape_key_add(name="Basis")

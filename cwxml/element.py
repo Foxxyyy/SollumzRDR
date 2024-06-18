@@ -1,4 +1,4 @@
-"""Manages reading/writing Codewalker XML files"""
+"""Manages reading/writing CodeX XML files"""
 from mathutils import Vector, Quaternion, Matrix
 from abc import abstractmethod, ABC as AbstractClass, abstractclassmethod
 from dataclasses import dataclass

@@ -16,7 +16,7 @@ from typing import Optional
 from enum import Enum
 
 
-current_game = SollumzGame.GTA
+current_game = SollumzGame.RDR1
 
 class FileNameList(ListProperty):
     class FileName(TextProperty):
@@ -65,10 +65,6 @@ class ShaderParameterDef(ElementTree, ABC):
         self.name = AttributeProperty("name")
         self.type = AttributeProperty("type", self.type)
         self.hidden = AttributeProperty("hidden", False)
-        if current_game == SollumzGame.GTA:
-            self.subtype = AttributeProperty("subtype")
-        elif current_game == SollumzGame.RDR:
-            self.index = AttributeProperty("index")
 
 
 class ShaderParameterTextureDef(ShaderParameterDef):
@@ -77,8 +73,6 @@ class ShaderParameterTextureDef(ShaderParameterDef):
     def __init__(self):
         super().__init__()
         self.uv = AttributeProperty("uv")
-        if current_game == SollumzGame.RDR:
-            self.index = AttributeProperty("index", 0)
 
 
 class ShaderParameterFloatVectorDef(ShaderParameterDef, ABC):
@@ -241,29 +235,17 @@ class ShaderDef(ElementTree):
 
     def __init__(self):
         super().__init__()
-        if current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.filename = TextProperty("Name")
             self.render_bucket = 0
             self.buffer_size = []
             self.parameters = ShaderParameterDefsList("Params")
             self.semantics = SemanticsList()
             self.parameter_map = {}
-        elif current_game == SollumzGame.GTA:
-            self.filename = TextProperty("Name", "")
-            self.layouts = LayoutList()
-            self.parameters = ShaderParameterDefsList("Parameters")
-            self.render_bucket = 0
-            self.uv_maps = {}
-            self.parameter_map = {}
 
     @property
     def required_tangent(self):
-        if current_game == SollumzGame.GTA:
-            for layout in self.layouts:
-                if "Tangent" in layout.value:
-                    return True
-            return False
-        elif current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             tangents = set()
             for semantic in self.semantics.values:
                 current_semantic = None
@@ -289,12 +271,7 @@ class ShaderDef(ElementTree):
 
     @property
     def required_normal(self):
-        if current_game == SollumzGame.GTA:
-            for layout in self.layouts:
-                if "Normal" in layout.value:
-                    return True
-            return False
-        elif current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             for semantic in self.semantics.values:
                 for this_semantic in semantic:
                     entry = VERT_ATTR_DTYPES[this_semantic].copy()
@@ -305,12 +282,7 @@ class ShaderDef(ElementTree):
     @property
     def used_texcoords(self) -> set[str]:
         names = set()
-        if current_game == SollumzGame.GTA:
-            for layout in self.layouts:
-                for field_name in layout.value:
-                    if "TexCoord" in field_name:
-                        names.add(field_name)
-        elif current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             for semantic in self.semantics.values:
                 for this_semantic in semantic:
                     entry = VERT_ATTR_DTYPES[this_semantic].copy()
@@ -321,12 +293,7 @@ class ShaderDef(ElementTree):
     @property
     def used_colors(self) -> set[str]:
         names = set()
-        if current_game == SollumzGame.GTA:
-            for layout in self.layouts:
-                for field_name in layout.value:
-                    if "Colour" in field_name:
-                        names.add(field_name)
-        elif current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             for semantic in self.semantics.values:
                 for this_semantic in semantic:
                     entry = VERT_ATTR_DTYPES[this_semantic].copy()
@@ -349,8 +316,6 @@ class ShaderDef(ElementTree):
 
 
 class ShaderManager:
-    shaderxml = os.path.join(os.path.dirname(__file__), "Shaders.xml")
-    rdr_shaderxml = os.path.join(os.path.dirname(__file__), "ModRDRShaders.xml")
     rdr1_shaderxml = os.path.join(os.path.dirname(__file__), "RDR1Shaders.xml")
     # Map shader filenames to base shader names
     _shaders_base_names: dict[ShaderDef, str] = {}
@@ -382,10 +347,8 @@ class ShaderManager:
     cutouts = ["cutout.sps", "cutout_um.sps", "cutout_tnt.sps", "cutout_fence.sps", "cutout_fence_normal.sps", "cutout_hard.sps", "cutout_spec_tnt.sps", "normal_cutout.sps",
                "normal_cutout_tnt.sps", "normal_cutout_um.sps", "normal_spec_cutout.sps", "normal_spec_cutout_tnt.sps", "trees_lod.sps", "trees.sps", "trees_tnt.sps",
                "trees_normal.sps", "trees_normal_spec.sps", "trees_normal_spec_tnt.sps", "trees_normal_diffspec.sps", "trees_normal_diffspec_tnt.sps"]
-    alphas = ["normal_spec_alpha.sps", "normal_spec_reflect_alpha.sps", "normal_spec_reflect_emissivenight_alpha.sps", "normal_spec_screendooralpha.sps", "normal_alpha.sps",
-              "normal_reflect_alpha.sps", "emissive_alpha.sps", "emissive_alpha_tnt.sps", "emissive_clip.sps", "emissive_additive_alpha.sps", "emissivenight_alpha.sps", "emissivestrong_alpha.sps",
-              "spec_alpha.sps", "spec_reflect_alpha.sps", "alpha.sps", "reflect_alpha.sps", "normal_screendooralpha.sps", "spec_screendooralpha.sps", "cloth_spec_alpha.sps",
-              "cloth_normal_spec_alpha.sps"]
+    alphas = ["rdr2_alpha_bspec_ao_shareduv_character_hair", "rdr2_alpha_bspec_ao_shareduv_character", "rdr2_alpha_bspec_ao_shareduv_character_cutscene",
+              "rdr2_alpha_hair_a", "rdr2_alpha_bspec_ao_shareduv_character_nooff"]
     glasses = ["glass.sps", "glass_pv.sps", "glass_pv_env.sps", "glass_env.sps", "glass_spec.sps", "glass_reflect.sps", "glass_emissive.sps", "glass_emissivenight.sps",
                "glass_emissivenight_alpha.sps", "glass_breakable.sps", "glass_breakable_screendooralpha.sps", "glass_displacement.sps", "glass_normal_spec_reflect.sps",
                "glass_emissive_alpha.sps"]
@@ -422,51 +385,7 @@ class ShaderManager:
     @staticmethod
     def load_shaders():
         global current_game
-        tree = ET.parse(ShaderManager.shaderxml)
-        rdrtree = ET.parse(ShaderManager.rdr_shaderxml)
         rdr1tree = ET.parse(ShaderManager.rdr1_shaderxml)
-
-        current_game = SollumzGame.GTA
-        for node in tree.getroot():
-            base_name = node.find("Name").text
-            for filename_elem in node.findall("./FileName//*"):
-                filename = filename_elem.text
-
-                if filename is None:
-                    continue
-
-                filename_hash = jenkhash.Generate(filename)
-                render_bucket = int(filename_elem.attrib["bucket"])
-
-                shader = ShaderDef.from_xml(node)
-                shader.filename = filename
-                shader.render_bucket = render_bucket
-                ShaderManager._shaders[filename] = shader
-                ShaderManager._shaders_by_hash[filename_hash] = shader
-                ShaderManager._shaders_base_names[shader] = base_name
-        
-        current_game = SollumzGame.RDR
-        for node in rdrtree.getroot():
-            base_name = node.find("Name").text
-
-            filename_hash = jenkhash.Generate(base_name)
-            render_bucket = node.find("DrawBucket").text.split(" ")
-            if len(render_bucket) == 1:
-                render_bucket = int(render_bucket[0])
-            else:
-                render_bucket = [int(x) for x in render_bucket]
-            
-            buffer_size = node.find("BufferSizes").text
-            if buffer_size != None:
-                buffer_size = [int(x) for x in node.find("BufferSizes").text.split(" ")]
-
-            shader = ShaderDef.from_xml(node)
-            shader.filename = base_name
-            shader.render_bucket = render_bucket
-            shader.buffer_size = buffer_size
-            ShaderManager._rdr_shaders[base_name] = shader
-            ShaderManager._rdr_shaders_by_hash[filename_hash] = shader
-            ShaderManager._rdr_shaders_base_names[shader] = base_name
 
         current_game = SollumzGame.RDR1
         for node in rdr1tree.getroot():
@@ -487,18 +406,12 @@ class ShaderManager:
             ShaderManager._rdr1_shaders_base_names[shader] = base_name
         
         print("\Loaded total RDR1 shaders:", len(ShaderManager._rdr1_shaders))
-        print("\Loaded total RDR2 shaders:", len(ShaderManager._rdr_shaders))
-        print("\Loaded total GTA shaders:", len(ShaderManager._shaders))
 
 
     @staticmethod
-    def find_shader(filename: str, game: SollumzGame = SollumzGame.GTA) -> Optional[ShaderDef]:
+    def find_shader(filename: str, game: SollumzGame = SollumzGame.RDR1) -> Optional[ShaderDef]:
         shader = None
-        if game == SollumzGame.GTA:
-            shader = ShaderManager._shaders.get(filename, None)
-        elif game == SollumzGame.RDR:
-            shader = ShaderManager._rdr_shaders.get(filename, None)
-        elif game == SollumzGame.RDR1:
+        if game == SollumzGame.RDR1:
             shader = ShaderManager._rdr1_shaders.get(filename, None)
         if shader is None and filename.startswith("hash_"):
             filename_hash = int(filename[5:], 16)
@@ -510,11 +423,7 @@ class ShaderManager:
         shader = ShaderManager.find_shader(filename, game)
         if shader is None:
             return None
-        if game == SollumzGame.GTA:
-            return ShaderManager._shaders_base_names[shader]
-        elif game == SollumzGame.RDR:
-            return ShaderManager._rdr_shaders_base_names[shader]
-        elif game == SollumzGame.RDR1:
+        if game == SollumzGame.RDR1:
             return ShaderManager._rdr1_shaders_base_names[shader]
 
 ShaderManager.load_shaders()

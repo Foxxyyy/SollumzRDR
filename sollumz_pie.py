@@ -30,14 +30,14 @@ class SOLLUMZ_MT_pie_menu(Menu):
                      text="Find Missing Textures", icon='VIEWZOOM')
         # Top-left
         pie.operator("sollumz.import",
-                     text="Import CodeWalker XML", icon='IMPORT')
+                     text="Import CodeX XML", icon='IMPORT')
         # Top-right
         if context.scene.sollumz_export_path != "":
-            op = pie.operator("sollumz.export", text="Export CodeWalker XML", icon='EXPORT')
+            op = pie.operator("sollumz.export", text="Export CodeX XML", icon='EXPORT')
             op.directory = context.scene.sollumz_export_path
             op.direct_export = True
         else:
-            pie.operator("sollumz.export", text="Export CodeWalker XML", icon='EXPORT')
+            pie.operator("sollumz.export", text="Export CodeX XML", icon='EXPORT')
         # Bottom-left
         pie.operator("sollumz.converttodrawable", icon='CUBE')
         # Bottom-right

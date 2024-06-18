@@ -6,11 +6,9 @@ from mathutils import Matrix
 from .. import logger
 from ..tools.drawablehelper import get_model_xmls_by_lod
 from .shader_materials import create_shader, get_detail_extra_sampler, create_tinted_shader_graph
-from ..ybn.ybnimport import create_bound_composite, create_bound_object
 from ..sollumz_properties import SollumzGame, TextureFormat, TextureUsage, SollumType, SOLLUMZ_UI_NAMES
 from ..sollumz_preferences import get_addon_preferences, get_import_settings
 from ..cwxml.drawable import WFD, BoneLimit, Joints, LodList, Shader, ShaderGroup, Drawable, Bone, Skeleton, RotationLimit, DrawableModel
-from ..cwxml.bound import BoundChild
 from ..tools.blenderhelper import add_child_of_bone_constraint, create_empty_object, create_blender_object, join_objects, add_armature_modifier, parent_objs
 from ..tools.utils import get_filename
 from ..shared.shader_nodes import SzShaderNodeParameter
@@ -50,8 +48,6 @@ def create_drawable_obj(drawable_xml: Drawable, filepath: str, name: Optional[st
     else:
         drawable_obj = create_drawable_empty(name, drawable_xml) 
 
-    if drawable_xml.bounds:
-        create_embedded_collisions(drawable_xml.bounds, drawable_obj)
 
     armature_obj = drawable_obj if drawable_obj.type == "ARMATURE" else external_armature
     if armature_obj is None:
@@ -426,30 +422,6 @@ def create_limit_pos_bone_constraint(trans_limit: BoneLimit, pose_bone: bpy.type
     constraint.min_y = trans_limit.min.y
     constraint.min_z = trans_limit.min.z
 
-
-def create_embedded_collisions(bounds_xml: list[BoundChild], drawable_obj: bpy.types.Object):
-    col_name = f"{drawable_obj.name}.col"
-    bound_objs: list[bpy.types.Object] = []
-    composite_objs: list[bpy.types.Object] = []
-
-    for bound_xml in bounds_xml:
-        if bound_xml.type == "Composite":
-            bound_obj = create_bound_composite(bound_xml)
-            composite_objs.append(bound_obj)
-        else:
-            bound_obj = create_bound_object(bound_xml)
-            bound_objs.append(bound_obj)
-
-    for obj in composite_objs:
-        obj.name = col_name
-        obj.parent = drawable_obj
-
-    for bound_obj in bound_objs:
-        bound_obj.parent = drawable_obj
-
-def create_drawable_lights(drawable_xml: Drawable, drawable_obj: bpy.types.Object, armature_obj: Optional[bpy.types.Object] = None):
-    lights = create_light_objs(drawable_xml.lights, armature_obj)
-    lights.parent = drawable_obj
 
 def set_drawable_properties(obj: bpy.types.Object, drawable_xml: Drawable, armature: bool = False):
     obj.drawable_properties.lod_dist_high = drawable_xml.lod_dist_high

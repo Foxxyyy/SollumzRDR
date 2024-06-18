@@ -1,6 +1,5 @@
 from typing import Optional, NamedTuple
 import bpy
-from ..ydr.shader_materials_RDR import RDR_create_basic_shader_nodes
 from ..cwxml.shader import (
     ShaderManager,
     ShaderDef,
@@ -14,11 +13,10 @@ from ..cwxml.shader import (
 )
 from ..sollumz_properties import MaterialType, SollumzGame
 from ..tools.blenderhelper import find_bsdf_and_material_output
-from ..tools.animationhelper import add_global_anim_uv_nodes
 from ..tools.meshhelper import get_uv_map_name
-from ..ydr.shader_materials_SHARED import ShaderBuilder, create_image_node, create_parameter_node, link_value_shader_parameters, link_normal, try_get_node, link_diffuse, create_decal_nodes
+from ..wfd.shader_materials_SHARED import ShaderBuilder, create_image_node, create_parameter_node, link_value_shader_parameters, link_normal, try_get_node, link_diffuse, create_decal_nodes
 from ..shared.shader_nodes import SzShaderNodeParameter, SzShaderNodeParameterDisplayType
-from .render_bucket import RenderBucket
+from .render_bucket import RenderBucket, bucket_mapping
 
 class ShaderBuilder(NamedTuple):
     shader: ShaderDef
@@ -33,6 +31,14 @@ class ShaderMaterial(NamedTuple):
     name: str
     ui_name: str
     value: str
+
+rdr1_shadermats = []
+
+for shader in ShaderManager._rdr1_shaders.values():
+    name = shader.filename.replace(".sps", "").upper()
+
+    rdr1_shadermats.append(ShaderMaterial(
+        name, name.replace("_", " "), shader.filename))
 
 def try_get_node(node_tree: bpy.types.NodeTree, name: str) -> Optional[bpy.types.Node]:
     """Gets a node by its name. Returns `None` if not found.
@@ -456,13 +462,7 @@ def link_normal(b: ShaderBuilder, nrmtex):
     node_tree = b.node_tree
     bsdf = b.bsdf
     links = node_tree.links
-    normalmap = node_tree.nodes.new("ShaderNodeNormalMap")
-
-    rgb_curves = create_normal_invert_node(node_tree)
-
-    links.new(nrmtex.outputs["Color"], rgb_curves.inputs["Color"])
-    links.new(rgb_curves.outputs["Color"], normalmap.inputs["Color"])
-    links.new(normalmap.outputs["Normal"], bsdf.inputs["Normal"])
+    links.new(nrmtex.outputs["Color"], bsdf.inputs["Normal"])
 
 
 def create_normal_invert_node(node_tree: bpy.types.NodeTree):
@@ -560,17 +560,7 @@ def create_decal_nodes(b: ShaderBuilder, texture, decalflag):
     mix = node_tree.nodes.new("ShaderNodeMixShader")
     trans = node_tree.nodes.new("ShaderNodeBsdfTransparent")
     links.new(texture.outputs["Color"], bsdf.inputs["Base Color"])
-
-    if decalflag == 0:
-        links.new(texture.outputs["Alpha"], mix.inputs["Fac"])
-    if decalflag == 1:
-        vcs = node_tree.nodes.new("ShaderNodeVertexColor")
-        vcs.layer_name = "Color 1"  # set in create shader???
-        multi = node_tree.nodes.new("ShaderNodeMath")
-        multi.operation = "MULTIPLY"
-        links.new(vcs.outputs["Alpha"], multi.inputs[0])
-        links.new(texture.outputs["Alpha"], multi.inputs[1])
-        links.new(multi.outputs["Value"], mix.inputs["Fac"])
+    links.new(texture.outputs["Alpha"], mix.inputs["Fac"])
 
     links.new(trans.outputs["BSDF"], mix.inputs[1])
     links.remove(bsdf.outputs["BSDF"].links[0])
@@ -723,9 +713,6 @@ def create_water_nodes(b: ShaderBuilder):
     links.new(light_path.outputs["Is Shadow Ray"], mix_shader.inputs["Fac"])
     links.new(noise_tex.outputs["Fac"], bump.inputs["Height"])
     links.new(bump.outputs["Normal"], glass_shader.inputs["Normal"])
-
-
-def create_basic_shader_nodes(b: ShaderBuilder):
     shader = b.shader
     filename = b.filename
     mat = b.material
@@ -1024,7 +1011,7 @@ def create_tint_nodes(
     links.new(mix.outputs[0], bsdf.inputs["Base Color"])
 
 
-def RDR_create_basic_shader_nodes(b: ShaderBuilder, game = SollumzGame.RDR):
+def RDR_create_basic_shader_nodes(b: ShaderBuilder, game = SollumzGame.RDR1):
     shader = b.shader
     filename = b.filename
     mat = b.material
@@ -1213,7 +1200,8 @@ def create_shader(filename: str):
     mat.shader_properties.filename = filename
 
     if isinstance(shader.render_bucket, int):
-        mat.shader_properties.renderbucket = shader.render_bucket
+        bucket_str = bucket_mapping.get(RenderBucket(shader.render_bucket), "OPAQUE")
+        mat.shader_properties.renderbucket = bucket_str
     else:
         mat.shader_properties.renderbucket = shader.render_bucket[0]
 
@@ -1234,9 +1222,6 @@ def create_shader(filename: str):
         create_terrain_shader(builder)
     else:
         RDR_create_basic_shader_nodes(builder, game=SollumzGame.RDR1)
-
-    if shader.is_uv_animation_supported:
-        add_global_anim_uv_nodes(mat)
 
     link_uv_map_nodes_to_textures(builder)
 

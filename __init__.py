@@ -19,7 +19,7 @@ from . import sollumz_tool
 bl_info = {
     "name": "Sollumz",
     "author": "Skylumz and Colton",
-    "description": "This plugins allows you to import/export codewalker xml files.",
+    "description": "This plugins allows you to import/export CodeX xml files.",
     "blender": (4, 0, 0),
     "version": (2, 3, 1),
     "category": "Import-Export"

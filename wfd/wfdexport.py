@@ -53,7 +53,6 @@ from ..sollumz_properties import (
     SollumzGame
 )
 from ..sollumz_preferences import get_export_settings
-from ..ybn.ybnexport import create_composite_xml, create_bound_xml
 from .properties import get_model_properties
 from .render_bucket import RenderBucket
 from .vertex_buffer_builder import VertexBufferBuilder, dedupe_and_get_indices, get_indices_without_deduplication, remove_arr_field, remove_unused_colors, get_bone_by_vgroup, remove_unused_uvs
@@ -106,8 +105,6 @@ def create_drawable_xml(drawable_obj: bpy.types.Object, armature_obj: Optional[b
 
     set_drawable_xml_flags(drawable_xml)
     set_drawable_xml_extents(drawable_xml)
-
-    create_embedded_collision_xmls(drawable_obj, drawable_xml, auto_calc_volume, auto_calc_inertia)
 
     if armature_obj is not None:
         armature_obj.data.pose_position = original_pose
@@ -932,25 +929,6 @@ def set_drawable_xml_extents(drawable_xml: Drawable):
         bbmax, drawable_xml.bounding_sphere_center)
     drawable_xml.bounding_box_min = bbmin
     drawable_xml.bounding_box_max = bbmax
-
-
-def create_embedded_collision_xmls(drawable_obj: bpy.types.Object, drawable_xml: Drawable, auto_calc_volume: bool = False, auto_calc_inertia: bool = False):
-    for child in drawable_obj.children:
-        bound_xml = None
-
-        if child.sollum_type == SollumType.BOUND_COMPOSITE:
-            bound_xml = create_composite_xml(
-                child, auto_calc_inertia, auto_calc_volume)
-        elif child.sollum_type in BOUND_TYPES:
-            bound_xml = create_bound_xml(
-                child, auto_calc_inertia, auto_calc_volume)
-
-            if not bound_xml.composite_transform.is_identity:
-                logger.warning(
-                    f"Embedded bound '{child.name}' has transforms (location, rotation, scale) but is not parented to a Bound Composite. Parent the collision to a Bound Composite in order for the transforms to work in-game.")
-
-        if bound_xml is not None:
-            drawable_xml.bounds.append(bound_xml)
 
 
 def set_drawable_xml_properties(drawable_obj: bpy.types.Object, drawable_xml: Drawable):

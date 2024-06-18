@@ -1,7 +1,7 @@
 import bpy
 from bpy.types import Context
 from . import operators as ydr_ops
-from ..ydr.shader_materials import rdr1_shadermats
+from ..wfd.shader_materials import rdr1_shadermats
 from ..sollumz_ui import SOLLUMZ_PT_OBJECT_PANEL, SOLLUMZ_PT_MAT_PANEL
 from ..sollumz_properties import SollumType, MaterialType, LightType, SOLLUMZ_UI_NAMES
 from ..sollumz_ui import FlagsPanel, TimeFlagsPanel

@@ -2,13 +2,12 @@ import bpy
 from typing import Union
 
 from mathutils import Vector, Quaternion
-
 from ..cwxml import ytyp as ytypxml, ymap as ymapxml
 from ..sollumz_properties import ArchetypeType, AssetType, EntityLodLevel, EntityPriorityLevel, SollumzGame, MapEntityType
 from .properties.ytyp import CMapTypesProperties, ArchetypeProperties, TimecycleModifierProperties, RoomProperties, PortalProperties, MloEntityProperties, EntitySetProperties
 from .properties.extensions import ExtensionProperties, ExtensionType, ExtensionsContainer
 
-current_game = SollumzGame.GTA
+current_game = SollumzGame.RDR1
 
 def create_mlo_entity_set(entity_set_xml: ytypxml.EntitySet, archetype: ArchetypeProperties):
     """Create an mlo entity sets from an xml for the provided archetype data-block."""

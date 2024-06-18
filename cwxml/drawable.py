@@ -24,44 +24,10 @@ from .element import (
     Vector4Property,
     MatrixProperty
 )
-from .bound import (
-    BoundBox,
-    BoundCapsule,
-    BoundCloth,
-    BoundComposite,
-    BoundCylinder,
-    BoundDisc,
-    BoundGeometry,
-    BoundGeometryBVH,
-    BoundSphere,
-    BoundFile,
-    RDRBoundFile
-)
 from collections.abc import MutableSequence
 from .drawable_RDR import BoneMappingProperty, VertexLayout, VerticesProperty, IndicesProperty
 
-current_game = SollumzGame.GTA
-
-class YDD:
-
-    file_extension = ".ydd.xml"
-
-    @staticmethod
-    def from_xml_file(filepath):
-        global current_game
-        tree = ET.parse(filepath)
-        gameTag = tree.getroot().tag
-        if "RDR2" in gameTag:
-            current_game = SollumzGame.RDR
-            return RDR2DrawableDictionary.from_xml_file(filepath)
-        else:
-            current_game = SollumzGame.GTA
-            return DrawableDictionary.from_xml_file(filepath)
-        
-
-    @staticmethod
-    def write_xml(drawable_dict, filepath):
-        return drawable_dict.write_xml(filepath)
+current_game = SollumzGame.RDR1
 
 class WVD:
 
@@ -76,7 +42,8 @@ class WVD:
     @staticmethod
     def write_xml(drawable, filepath):
         return drawable.write_xml(filepath)
-    
+
+
 class WFD:
 
     file_extension = ".wfd.xml"
@@ -93,25 +60,6 @@ class WFD:
     def write_xml(drawable, filepath):
         return drawable.write_xml(filepath)
 
-class YDR:
-
-    file_extension = ".ydr.xml"
-
-    @staticmethod
-    def from_xml_file(filepath):
-        global current_game
-        tree = ET.parse(filepath)
-        gameTag = tree.getroot().tag
-        if "RDR2" in gameTag:
-            current_game = SollumzGame.RDR
-        else:
-            current_game = SollumzGame.GTA
-        return Drawable(gameTag).from_xml_file(filepath)
-
-    @staticmethod
-    def write_xml(drawable, filepath):
-        return drawable.write_xml(filepath)
-
 
 class Texture(ElementTree):
     tag_name = "Item"
@@ -119,18 +67,6 @@ class Texture(ElementTree):
     def __init__(self):
         super().__init__()
         self.name = TextProperty("Name", "")
-        if current_game == SollumzGame.GTA:        
-            self.unk32 = ValueProperty("Unk32", 0)
-            self.usage = TextProperty("Usage")
-            self.usage_flags = FlagsProperty("UsageFlags")
-            self.extra_flags = ValueProperty("ExtraFlags", 0)
-            self.width = ValueProperty("Width", 0)
-            self.height = ValueProperty("Height", 0)
-            self.miplevels = ValueProperty("MipLevels", 0)
-            self.format = TextProperty("Format")
-            self.filename = TextProperty("FileName", "")
-        elif current_game == SollumzGame.RDR:
-            self.flags = ValueProperty("Flags", 0)
 
 
 class TextureDictionaryList(ListProperty):
@@ -177,7 +113,6 @@ class RDRTextureDictionaryList(ElementTree, AbstractClass):
         return element
         
 
-
 class ShaderParameter(ElementTree, AbstractClass):
     tag_name = "Item"
 
@@ -198,9 +133,7 @@ class TextureShaderParameter(ShaderParameter):
     def __init__(self):
         super().__init__()
 
-        if current_game == SollumzGame.GTA:
-            self.texture_name = TextProperty("Name")
-        elif current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.texture_name = AttributeProperty("texture", "")
             self.index = AttributeProperty("index", 0)
             self.flags = AttributeProperty("flags", 0)
@@ -409,11 +342,7 @@ class Shader(ElementTree):
     def __init__(self):
         super().__init__()
         self.name = TextProperty("Name", "")
-        if current_game == SollumzGame.GTA:
-            self.filename = TextProperty("FileName", "")
-            self.render_bucket = ValueProperty("RenderBucket", 0)
-            self.parameters = ParametersList()
-        elif current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.draw_bucket = ValueProperty("DrawBucket", 0)
             self.parameters = RDRParameters()
 
@@ -438,10 +367,7 @@ class ShaderGroup(ElementTree):
 
     def __init__(self):
         super().__init__()
-        if current_game == SollumzGame.GTA:
-            self.unknown_30 = ValueProperty("Unknown30", 0)
-            self.texture_dictionary = TextureDictionaryList()
-        elif current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.texture_dictionary = RDRTextureDictionaryList()
         self.shaders = ShadersList()
 
@@ -492,15 +418,7 @@ class Bone(ElementTree):
         # by default if a bone don't have parent or sibling there should be -1 instead of 0
         self.parent_index = ValueProperty("ParentIndex", -1)
 
-        if current_game == SollumzGame.GTA:
-            self.sibling_index = ValueProperty("SiblingIndex", -1)
-            self.transform_unk = QuaternionProperty("TransformUnk")
-            self.translation = VectorProperty("Translation")
-        elif current_game == SollumzGame.RDR:
-            self.sibling_index = ValueProperty("NextSiblingIndex", -1)
-            self.last_sibling_index = ValueProperty("LastSiblingIndex", -1)
-            self.translation = VectorProperty("Position")
-        elif current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.mirror_index = ValueProperty("MirrorIndex", 0)
             self.default_rotation = VectorProperty("DefaultRotation")
             self.global_offset = VectorProperty("GlobalOffset")
@@ -526,32 +444,7 @@ class Skeleton(ElementTree):
 
     def __init__(self):
         super().__init__()
-        # copied from player_zero.yft
-        # what do the following 4 unks mean and what are they for still remain unknown
-        # before we've been using 0 for default value
-        # but it turns out that if unk50 and unk54 are 0 it would just crash the game in some cases, e.g. modifying the yft of a streamedped, player_zero.yft for example
-        # as we don't know how to calc all those unks we should use a hacky default value working in most if not all cases, so I replace 0 with the stuff from player_zero.yft
-        # unknown_1c is either 0 or 16777216, the latter in most cases
-        # oiv seems to get unknown_50 and unknown_54 correct somehow
-        # unknown_58 is DataCRC in gims, oiv doesn't seem to calc it correctly so they leave it for user to edit this
-
-        # UPDATE
-        # from: NcProductions and ArthurLopes
-        # to my knowledge, having two addon peds with the same unknown 1C, 50, 54 and 58 value will cause one of them to be messed up when spawned together. for example, first add-on will spawn without problem, the second will have the bones messed up.
-        # fixing this issue is simple by changing the value like you mentioned.
-        if current_game == SollumzGame.GTA:
-            self.unknown_1c = ValueProperty("Unknown1C", 16777216)
-            self.unknown_50 = ValueProperty("Unknown50", 567032952)
-            self.unknown_54 = ValueProperty("Unknown54", 2134582703)
-            self.unknown_58 = ValueProperty("Unknown58", 2503907467)
-        elif current_game == SollumzGame.RDR:
-            self.unknown_24 = ValueProperty("Unknown_24", 16777216)
-            self.unknown_50 = TextProperty("Unknown_50", "VRJTjUA_0xFD1B4CE2")
-            self.unknown_54 = TextProperty("Unknown_54", "JcfuiBB_0x89E74EEE")
-            self.unknown_58 = TextProperty("Unknown_58", "IdlqQAA_0x825CEBDD")
-            self.unknown_60 = ValueProperty("Unknown_60", 257)
-            self.parent_bone_tag = ValueProperty("ParentBoneTag", 0)
-        elif current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.flags = ValueProperty("Flags", 10)
             self.joint_data = ValueProperty("JointData", 13814012)
         self.bones = BonesList("Bones")
@@ -592,54 +485,6 @@ class Joints(ElementTree):
         super().__init__()
         self.rotation_limits = RotationLimitsList("RotationLimits")
         self.translation_limits = TranslationLimitsList("TranslationLimits")
-
-
-class Light(ElementTree):
-    tag_name = "Item"
-
-    def __init__(self):
-        super().__init__()
-        self.position = VectorProperty("Position")
-        self.color = ColorProperty("Colour")
-        self.flashiness = ValueProperty("Flashiness")
-        self.intensity = ValueProperty("Intensity")
-        self.flags = ValueProperty("Flags")
-        self.bone_id = ValueProperty("BoneId")
-        self.type = TextProperty("Type")
-        self.group_id = ValueProperty("GroupId")
-        self.time_flags = ValueProperty("TimeFlags")
-        self.falloff = ValueProperty("Falloff")
-        self.falloff_exponent = ValueProperty("FalloffExponent")
-        self.culling_plane_normal = VectorProperty("CullingPlaneNormal")
-        self.culling_plane_offset = ValueProperty("CullingPlaneOffset")
-        self.unknown_45 = ValueProperty("Unknown45")
-        self.unknown_46 = ValueProperty("Unknown46")
-        self.volume_intensity = ValueProperty("VolumeIntensity")
-        self.volume_size_scale = ValueProperty("VolumeSizeScale")
-        self.volume_outer_color = ColorProperty("VolumeOuterColour")
-        self.light_hash = ValueProperty("LightHash")
-        self.volume_outer_intensity = ValueProperty("VolumeOuterIntensity")
-        self.corona_size = ValueProperty("CoronaSize")
-        self.volume_outer_exponent = ValueProperty("VolumeOuterExponent")
-        self.light_fade_distance = ValueProperty("LightFadeDistance")
-        self.shadow_fade_distance = ValueProperty("ShadowFadeDistance")
-        self.specular_fade_distance = ValueProperty("SpecularFadeDistance")
-        self.volumetric_fade_distance = ValueProperty("VolumetricFadeDistance")
-        self.shadow_near_clip = ValueProperty("ShadowNearClip")
-        self.corona_intensity = ValueProperty("CoronaIntensity")
-        self.corona_z_bias = ValueProperty("CoronaZBias")
-        self.direction = VectorProperty("Direction")
-        self.tangent = VectorProperty("Tangent")
-        self.cone_inner_angle = ValueProperty("ConeInnerAngle")
-        self.cone_outer_angle = ValueProperty("ConeOuterAngle")
-        self.extent = VectorProperty("Extent")
-        self.shadow_blur = ValueProperty("ShadowBlur")
-        self.projected_texture_hash = TextProperty("ProjectedTextureHash")
-
-
-class Lights(ListProperty):
-    list_type = Light
-    tag_name = "Lights"
 
 
 class VertexLayoutList(ElementProperty):
@@ -815,19 +660,9 @@ class Geometry(ElementTree):
         self.bounding_box_min = VectorProperty("BoundingBoxMin")
         self.bounding_box_max = VectorProperty("BoundingBoxMax")
 
-        if current_game == SollumzGame.GTA:
-            self.shader_index = ValueProperty("ShaderIndex", 0)
-            self.bone_ids = BoneIDProperty()
-            self.vertex_buffer = VertexBuffer()
-            self.index_buffer = IndexBuffer()
-        elif current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.shader_index = ValueProperty("ShaderID", 0)
-            if (current_game == SollumzGame.RDR):
-                self.colour_semantic = ValueProperty("ColourSemantic", 0)
-                self.bone_index = ValueProperty("BoneIndex", 0)
-                self.bone_count = ValueProperty("BonesCount", 0)
-            elif (current_game == SollumzGame.RDR1):
-                self.bone_ids = BoneIDProperty()
+            self.bone_ids = BoneIDProperty()
             self.vertex_layout = VertexLayout()
             self.vertices = VerticesProperty("Vertices")
             self.indices = IndicesProperty("Indices")
@@ -847,13 +682,8 @@ class DrawableModel(ElementTree):
         self.has_skin = ValueProperty("HasSkin", 0)
         self.bone_index = ValueProperty("BoneIndex", 0)
         
-        if current_game == SollumzGame.GTA:
-            self.render_mask = ValueProperty("RenderMask", 0)
-            self.unknown_1 = ValueProperty("Unknown1", 0)
-        elif current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.matrix_count = ValueProperty("BoneCount", 0)
-            if current_game == SollumzGame.RDR:
-                self.bone_mapping = BoneMappingProperty("BoneMapping")
             self.bounding_box_min = VectorProperty("BoundingBoxMin")
             self.bounding_box_max = VectorProperty("BoundingBoxMax")
 
@@ -877,6 +707,7 @@ class LodList(ElementTree):
         self.tag_name = tag_name
         super().__init__()
         self.models = LodModelsList()
+
 
 class Drawable(ElementTree, AbstractClass):
     tag_name = "Drawable"
@@ -918,19 +749,7 @@ class Drawable(ElementTree, AbstractClass):
         self.shader_group = ShaderGroup()
         self.skeleton = Skeleton()
 
-        if current_game == SollumzGame.GTA: 
-            self.unknown_9A = ValueProperty("Unknown9A", 0)
-            self.joints = Joints()
-            self.drawable_models_high = DrawableModelList(
-                "DrawableModelsHigh")
-            self.drawable_models_med = DrawableModelList(
-                "DrawableModelsMedium")
-            self.drawable_models_low = DrawableModelList(
-                "DrawableModelsLow")
-            self.drawable_models_vlow = DrawableModelList(
-                "DrawableModelsVeryLow")
-            self.lights = Lights()
-        elif current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
+        if current_game == SollumzGame.RDR1:
             self.version = AttributeProperty("version", 0)
             self.drawable_models_high = LodList("LodHigh")
             self.drawable_models_med = LodList("LodMed")
@@ -945,55 +764,12 @@ class Drawable(ElementTree, AbstractClass):
     @classmethod
     def from_xml(cls, element: ET.Element):
         new = super().from_xml(element)
-        bounds = element.findall("Bounds")
-        if current_game == SollumzGame.GTA:
-            for child in bounds:
-                bound_type = child.get("type")
-                bound = None
-                if bound_type == "Composite":
-                    bound = BoundFile.from_xml(child).composite
-                if bound_type == "Composite":
-                    bound = BoundComposite.from_xml(child)
-                elif bound_type == "Box":
-                    bound = BoundBox.from_xml(child)
-                elif bound_type == "Sphere":
-                    bound = BoundSphere.from_xml(child)
-                elif bound_type == "Capsule":
-                    bound = BoundCapsule.from_xml(child)
-                elif bound_type == "Cylinder":
-                    bound = BoundCylinder.from_xml(child)
-                elif bound_type == "Disc":
-                    bound = BoundDisc.from_xml(child)
-                elif bound_type == "Cloth":
-                    bound = BoundCloth.from_xml(child)
-                elif bound_type == "Geometry":
-                    bound = BoundGeometry.from_xml(child)
-                elif bound_type == "GeometryBVH":
-                    bound = BoundGeometryBVH.from_xml(child)
-
-                if bound:
-                    bound.tag_name = "Bounds"
-                    new.bounds.append(bound)
-
-        elif current_game == SollumzGame.RDR or current_game == SollumzGame.RDR1:
-            for child in bounds:
-                bound_type = child.get("type")
-                bound = None
-                if bound_type == "Composite":
-                    bound = RDRBoundFile.from_xml(child)
-                else:
-                    raise Exception("Unable to create RDR bound since its not composite and hence unimplemented")
-                if bound:
-                    bound.tag_name = "Bounds"
-                    new.bounds.append(bound)
         return new
 
     def to_xml(self):
         element = super().to_xml()
-        for bound in self.bounds:
-            bound.tag_name = "Bounds"
-            element.append(bound.to_xml())
         return element
+
 
 class RDR1VisualDictionary(ElementTree, AbstractClass):
     tag_name = "RDR1VisualDictionary"
@@ -1027,81 +803,6 @@ class RDR1VisualDictionary(ElementTree, AbstractClass):
                 item_element = ET.SubElement(drawables_element, "Item")
                 for child in drawable_element:
                     item_element.append(child)
-            else:
-                raise TypeError(
-                    f"{type(self).__name__}s can only hold '{Drawable.__name__}' objects, not '{type(drawable)}'!")
-
-        return element
-
-class RDR2DrawableDictionary(ElementTree, AbstractClass):
-    tag_name = "RDR2DrawableDictionary"
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.game = current_game
-        self.drawables = []
-
-    @classmethod
-    def from_xml(cls, element: ET.Element):
-        new = super().from_xml(element)
-        drawables = element.findall("Drawables")
-
-        for item in drawables:
-            drawable_items = item.findall("Item")
-            for child in drawable_items:
-                drawable = Drawable.from_xml(child)
-                drawable.tag_name = "Drawable"
-                new.drawables.append(drawable)
-        return new
-
-
-class DrawableDictionary(MutableSequence, Element):
-    tag_name = "DrawableDictionary"
-
-    def __init__(self, value=None):
-        super().__init__()
-        self.game = current_game
-        self._value = value or []
-
-    def __getitem__(self, name):
-        return self._value[name]
-
-    def __setitem__(self, key, value):
-        self._value[key] = value
-
-    def __delitem__(self, key):
-        del self._value[key]
-
-    def __iter__(self):
-        return iter(self._value)
-
-    def __len__(self):
-        return len(self._value)
-
-    def insert(self, index, value):
-        self._value.insert(index, value)
-
-    def sort(self, key):
-        self._value.sort(key=key)
-
-    @classmethod
-    def from_xml(cls, element: ET.Element):
-        new = cls()
-        new.tag_name = "Item"
-        children = element.findall(new.tag_name)
-
-        for child in children:
-            drawable = Drawable.from_xml(child)
-            new.append(drawable)
-
-        return new
-
-    def to_xml(self):
-        element = ET.Element(self.tag_name)
-        for drawable in self._value:
-            if isinstance(drawable, Drawable):
-                drawable.tag_name = "Item"
-                element.append(drawable.to_xml())
             else:
                 raise TypeError(
                     f"{type(self).__name__}s can only hold '{Drawable.__name__}' objects, not '{type(drawable)}'!")

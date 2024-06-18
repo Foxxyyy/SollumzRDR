@@ -11,6 +11,17 @@ class RenderBucket(IntEnum):
     WATER = 6
     DISPLACEMENT_ALPHA = 7
 
+# Mapping from RenderBucket values to their string names
+bucket_mapping = {
+    RenderBucket.OPAQUE: "OPAQUE",
+    RenderBucket.ALPHA: "ALPHA",
+    RenderBucket.DECAL: "DECAL",
+    RenderBucket.CUTOUT: "CUTOUT",
+    RenderBucket.NO_SPLASH: "NO_SPLASH",
+    RenderBucket.NO_WATER: "NO_WATER",
+    RenderBucket.WATER: "WATER",
+    RenderBucket.DISPLACEMENT_ALPHA: "DISPLACEMENT_ALPHA"
+}
 
 RenderBucketEnumItems = tuple((enum.name, f"{label} ({enum.value})", desc, enum.value) for enum, label, desc in (
     (RenderBucket.OPAQUE, "Opaque", "Opaque object, without alpha"),

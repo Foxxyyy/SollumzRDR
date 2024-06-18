@@ -1,6 +1,6 @@
 import bpy
 from mathutils import Vector
-from ..ydr.shader_materials import create_shader, create_tinted_shader_graph, obj_has_tint_mats, try_get_node
+from ..wfd.shader_materials import create_shader, create_tinted_shader_graph, obj_has_tint_mats, try_get_node
 from ..sollumz_properties import SollumType, MaterialType, LODLevel, SollumzGame
 from ..tools.blenderhelper import create_empty_object, find_bsdf_and_material_output
 from ..cwxml.drawable import BonePropertiesManager, Drawable, DrawableModel, TextureShaderParameter, VectorShaderParameter
