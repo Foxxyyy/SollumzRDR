@@ -141,7 +141,7 @@ def create_model_xmls(drawable_xml: Drawable, drawable_obj: bpy.types.Object, ma
 
 def get_model_objs(drawable_obj: bpy.types.Object) -> list[bpy.types.Object]:
     """Get all non-skinned Drawable Model objects under ``drawable_obj``."""
-    return [obj for obj in drawable_obj.children if obj.sollum_type == SollumType.DRAWABLE_MODEL and not obj.sollumz_is_physics_child_mesh]
+    return [obj for obj in drawable_obj.children if obj.sollum_type == SollumType.DRAWABLE_MODEL]
 
 
 def sort_skinned_models_by_bone(model_objs: list[bpy.types.Object], bones: list[bpy.types.Bone]):
@@ -181,12 +181,6 @@ def create_model_xml(model_obj: bpy.types.Object, lod_level: LODLevel, materials
     geometries_data = create_geometries_xml(mesh_eval, materials, bones, model_obj.vertex_groups)
     geometries = geometries_data[0]
     model_xml.geometries = geometries
-
-    if geometries_data[1] != None:
-        mapping = [bones[index].bone_properties.tag for index in geometries_data[1].values()]
-        model_xml.bone_mapping = mapping
-    else:
-        delattr(model_xml, "bone_mapping")
 
     model_xml.bounding_box_max = get_max_vector_list(geom.bounding_box_max for geom in geometries)
     model_xml.bounding_box_min = get_min_vector_list(geom.bounding_box_min for geom in geometries)
@@ -276,7 +270,8 @@ def create_geometries_xml(mesh_eval: bpy.types.Mesh, materials: list[bpy.types.M
             new_names.extend(tangent_names)
             vert_buffer = vert_buffer[new_names]
 
-        vert_buffer, ind_buffer = get_indices_without_deduplication(vert_buffer)
+        vert_buffer, ind_buffer = dedupe_and_get_indices(vert_buffer)
+        
         geom_xml = Geometry()
         geom_xml.bounding_box_max, geom_xml.bounding_box_min = get_geom_extents(vert_buffer["Position"])
         geom_xml.shader_index = mat_index
@@ -318,8 +313,9 @@ def create_geometries_xml(mesh_eval: bpy.types.Mesh, materials: list[bpy.types.M
         
         if bones and "BlendWeights" in vert_buffer.dtype.names:
             geom_xml.bone_ids = mesh_bone_ids
+            
         if bone_by_vgroup != None:
-                geom_xml.bone_count = len(bones)
+                geom_xml.bone_count = len(bone_by_vgroup)
 
         geom_xml.vertices = vert_buffer
         geom_xml.indices = ind_buffer
@@ -724,12 +720,10 @@ def create_bone_xml(pose_bone: bpy.types.PoseBone, bone_index: int, armature: bp
     bone_xml = Bone()
     bone_xml.name = bone.name
     bone_xml.index = bone_index
-    bone_xml.tag = bone.bone_properties.tag
 
     bone_xml.parent_index = get_bone_parent_index(bone, armature)
     bone_xml.sibling_index = get_bone_sibling_index(bone, armature)
 
-    set_bone_xml_flags(bone_xml, pose_bone)
     set_bone_xml_transforms(bone_xml, bone, armature_matrix)
 
     return bone_xml
@@ -758,24 +752,6 @@ def get_bone_sibling_index(bone: bpy.types.Bone, armature: bpy.types.Armature):
         break
 
     return sibling_index
-
-
-def set_bone_xml_flags(bone_xml: Bone, pose_bone: bpy.types.PoseBone):
-    bone = pose_bone.bone
-
-    for flag in bone.bone_properties.flags:
-        if not flag.name:
-            continue
-
-        bone_xml.flags.append(flag.name)
-
-    for constraint in pose_bone.constraints:
-        if constraint.type == "LIMIT_ROTATION":
-            bone_xml.flags.append("LimitRotation")
-            break
-
-    if bone.children:
-        bone_xml.flags.append("Unk0")
 
 
 def set_bone_xml_transforms(bone_xml: Bone, bone: bpy.types.Bone, armature_matrix: Matrix):
@@ -1040,7 +1016,6 @@ def get_shaders_from_blender(materials):
                     # Don't write extra material to xml
                     continue
                 param = TextureShaderParameter()
-                param.index = node.texture_properties.index
                 if node.sollumz_texture_name == "None":
                     delattr(param, "texture_name")
                 else:

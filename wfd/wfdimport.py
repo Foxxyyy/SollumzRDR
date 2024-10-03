@@ -297,7 +297,7 @@ def shader_item_to_material(shader: Shader, shader_group: ShaderGroup, filepath:
     # assign extra detail node image for viewing
     dtl_ext = get_detail_extra_sampler(material)
     if dtl_ext:
-        dtl = material.node_tree.nodes["DetailSampler"]
+        dtl = material.node_tree.nodes["detailmapsampler"]
         dtl_ext.image = dtl.image
 
     return material

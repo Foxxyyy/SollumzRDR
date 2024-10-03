@@ -1,6 +1,13 @@
-# WIP Sollumz version with RDR1 support
+# WIP - Sollumz fork with RDR1 support for Blender 4.0
 
-Allows to import wfd/wvd XML exported from CodeX (no support for XML exports yet, but can be used to port models, for RDR2 for example)
+Allows you to import .wfd & .wvd XML file exported from CodeX.       
 
-![Screenshot](icons/example_john.png)
+To export all separated textures using CodeX, open the model and click on `Export Selection`.      
+
+In Blender, missing textures can be opened from `File>External data>Find missing files`.
+
+# Random pictures
+![Screenshot](icons/example_barn.png)
+![Screenshot](icons/example_dutch.png)
+![Screenshot](icons/example_tiles.png)
 ![Screenshot](icons/example_boat.png)
