@@ -402,6 +402,8 @@ def create_parameter_node(
                         cols, rows = 4, 3
                     elif (param.name == "ganimatednormalmapparams"):
                         cols, rows = 4, 12
+                    elif (param.name == "g"): # rdr2_river_water
+                        cols, rows = 4, 16
 
     if param.hidden:
         display_type = SzShaderNodeParameterDisplayType.HIDDEN_IN_UI

@@ -564,9 +564,6 @@ class SOLLUMZ_PT_TXTPARAMS_PANEL(bpy.types.Panel):
                     row.prop(n.texture_properties, "embedded")
                     row.prop(n.image.colorspace_settings, "name", text="Color Space")
 
-                # TODO: verify if Usage can be completely removed
-                # box.prop(n.texture_properties, "usage")
-
 
 class SOLLUMZ_PT_VALUEPARAMS_PANEL(bpy.types.Panel):
     bl_label = "Value Parameters"

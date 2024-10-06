@@ -681,21 +681,7 @@ def get_embedded_texture_nodes(materials: list[bpy.types.Material]):
 
 def texture_from_img_node(node: bpy.types.ShaderNodeTexImage):
     texture = Texture()
-
     texture.name = node.sollumz_texture_name
-    texture.flags = node.texture_properties.extra_flags
-
-    return texture
-
-
-def set_texture_flags(node: bpy.types.ShaderNodeTexImage, texture: Texture):
-    """Set the texture flags of ``texture`` from ``node.texture_flags``."""
-    for prop in dir(node.texture_flags):
-        value = getattr(node.texture_flags, prop)
-
-        if value == True:
-            texture.usage_flags.append(prop.upper())
-
     return texture
 
 

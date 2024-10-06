@@ -295,7 +295,6 @@ def shader_item_to_material(shader: Shader, shader_group: ShaderGroup, filepath:
                         for texture in texture_dictionary:
                             if texture.name == param.texture_name:
                                 n.texture_properties.embedded = True
-                                n.texture_properties.extra_flags = 0
 
                     if not n.texture_properties.embedded and not n.image.filepath:
                         # Set external texture name for non-embedded textures

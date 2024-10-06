@@ -96,18 +96,14 @@ class RDRTextureDictionaryList(ElementTree, AbstractClass):
         return new
     
     
-    def to_xml(self):
-        
+    def to_xml(self):  
         element = super().to_xml()
         texs = ET.Element("Textures")
         for value in self.textures:
             item = ET.Element("Item")
             name = ET.Element("Name")
             name.text = value.name
-            flags = ET.Element("Flags")
-            flags.set("value", str(value.flags))
             item.append(name)
-            item.append(flags)
             texs.append(item)
         element.append(texs)
         return element
@@ -135,8 +131,6 @@ class TextureShaderParameter(ShaderParameter):
 
         if current_game == SollumzGame.RDR1:
             self.texture_name = AttributeProperty("texture", "")
-            self.index = AttributeProperty("index", 0)
-            self.flags = AttributeProperty("flags", 0)
 
     def __hash__(self) -> int:
         return hash((self.name, self.type, self.texture_name))
@@ -207,8 +201,6 @@ class CBufferShaderParameter(ShaderParameter):
 
     def to_xml(self):
         element = super().to_xml()
-        element.set("buffer", str(int(self.buffer)))
-        element.set("offset", str(int(self.offset)))
         element.set("length", str(self.length))
 
         if hasattr(self, "x") and self.x is not None:
@@ -432,7 +424,6 @@ class Bone(ElementTree):
         self.rotation = QuaternionProperty("DefaultRotationQuat")
         self.scale = VectorProperty("DefaultScale")
         
-
 
 class BonesList(ListProperty):
     list_type = Bone
@@ -738,10 +729,10 @@ class Drawable(ElementTree, AbstractClass):
         self.bounding_sphere_radius = ValueProperty("BoundingSphereRadius")
         self.bounding_box_min = VectorProperty("BoundingBoxMin")
         self.bounding_box_max = VectorProperty("BoundingBoxMax")
-        self.lod_dist_high = ValueProperty("LodDistHigh", 0)  # 9998?
-        self.lod_dist_med = ValueProperty("LodDistMed", 0)  # 9998?
-        self.lod_dist_low = ValueProperty("LodDistLow", 0)  # 9998?
-        self.lod_dist_vlow = ValueProperty("LodDistVlow", 0)  # 9998?
+        self.lod_dist_high = ValueProperty("LodDistHigh", 0)
+        self.lod_dist_med = ValueProperty("LodDistMed", 0)
+        self.lod_dist_low = ValueProperty("LodDistLow", 0)
+        self.lod_dist_vlow = ValueProperty("LodDistVlow", 0)
         self.flags_high = ValueProperty("FlagsHigh", 0)
         self.flags_med = ValueProperty("FlagsMed", 0)
         self.flags_low = ValueProperty("FlagsLow", 0)

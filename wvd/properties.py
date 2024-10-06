@@ -110,8 +110,6 @@ class TextureProperties(bpy.types.PropertyGroup):
         default=TextureFormat.DXT1
     )
 
-    extra_flags: bpy.props.IntProperty(name="Extra Flags", default=0)
-
 
 class BoneFlag(bpy.types.PropertyGroup):
     name: bpy.props.StringProperty(default="")
@@ -324,7 +322,6 @@ def unregister():
     del bpy.types.Object.skinned_model_properties
     del bpy.types.Material.shader_properties
     del bpy.types.ShaderNodeTexImage.texture_properties
-    del bpy.types.ShaderNodeTexImage.texture_flags
     del bpy.types.Bone.bone_properties
     del bpy.types.Light.light_properties
     del bpy.types.Scene.create_light_type
