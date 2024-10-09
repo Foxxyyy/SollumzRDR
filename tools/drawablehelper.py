@@ -225,6 +225,10 @@ def convert_obj_to_drawable(obj: bpy.types.Object, sollum_game_type: SollumzGame
 def convert_obj_to_visual_dict(obj: bpy.types.Object):
     drawable_obj = create_empty_object(SollumType.VISUAL_DICTIONARY)
     drawable_obj.location = obj.location
+    drawable_obj.rotation_mode = obj.rotation_mode
+    drawable_obj.rotation_euler = obj.rotation_euler
+    drawable_obj.rotation_quaternion = obj.rotation_quaternion
+    drawable_obj.rotation_axis_angle = obj.rotation_axis_angle
 
     obj_name = obj.name
 
@@ -236,6 +240,9 @@ def convert_obj_to_visual_dict(obj: bpy.types.Object):
     drawable_obj.parent = obj.parent
     obj.parent = drawable_obj
     obj.location = Vector()
+    obj.rotation_euler = (0.0, 0.0, 0.0)
+    obj.rotation_quaternion = (1.0, 0.0, 0.0, 0.0)
+    obj.rotation_axis_angle = (0.0, 0.0, 1.0, 0.0)
 
     return drawable_obj
 
@@ -259,9 +266,9 @@ def convert_objs_to_single_visual_dict(objs: list[bpy.types.Object], sollum_game
 
     return drawable_obj
 
-def convert_obj_to_model(obj: bpy.types.Object, sollum_game_type: SollumzGame):
+def convert_obj_to_model(obj: bpy.types.Object,):
     obj.sollum_type = SollumType.DRAWABLE_MODEL
-    obj.sollum_game_type = sollum_game_type
+    obj.sollum_game_type = SollumzGame.RDR1
     obj.sollumz_lods.add_empty_lods()
     obj.sollumz_lods.set_lod_mesh(LODLevel.HIGH, obj.data)
     obj.sollumz_lods.set_active_lod(LODLevel.HIGH)
