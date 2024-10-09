@@ -169,12 +169,12 @@ def create_model_xmls(drawable_xml: Drawable, drawable_obj: bpy.types.Object, ma
     # Drawables only ever have 1 skinned drawable model per LOD level. Since, the skinned portion of the
     # drawable can be split by vertex group, we have to join each separate part into a single object.
     # join_skinned_models_for_each_lod(drawable_xml)
-    # split_drawable_by_vert_count(drawable_xml)
+    #split_drawable_by_vert_count(drawable_xml)
 
 
 def get_model_objs(drawable_obj: bpy.types.Object) -> list[bpy.types.Object]:
     """Get all non-skinned Drawable Model objects under ``drawable_obj``."""
-    return [obj for obj in drawable_obj.children if obj.sollum_type == SollumType.DRAWABLE_MODEL and not obj.sollumz_is_physics_child_mesh]
+    return [obj for obj in drawable_obj.children if obj.sollum_type == SollumType.DRAWABLE_MODEL]
 
 
 def sort_skinned_models_by_bone(model_objs: list[bpy.types.Object], bones: list[bpy.types.Bone]):
@@ -299,7 +299,7 @@ def create_geometries_xml(mesh_eval: bpy.types.Mesh, materials: list[bpy.types.M
             new_names.extend(tangent_names)
             vert_buffer = vert_buffer[new_names]
 
-        vert_buffer, ind_buffer = get_indices_without_deduplication(vert_buffer)
+        vert_buffer, ind_buffer = dedupe_and_get_indices(vert_buffer)
         geom_xml = Geometry()
         geom_xml.bounding_box_max, geom_xml.bounding_box_min = get_geom_extents(vert_buffer["Position"])
         geom_xml.shader_index = mat_index
@@ -1032,7 +1032,6 @@ def get_shaders_from_blender(materials):
                     # Don't write extra material to xml
                     continue
                 param = TextureShaderParameter()
-                param.index = node.texture_properties.index
                 if node.sollumz_texture_name == "None":
                     delattr(param, "texture_name")
                 else:

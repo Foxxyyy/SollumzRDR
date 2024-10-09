@@ -1,7 +1,7 @@
 import bpy
 import numpy as np
 from numpy.typing import NDArray
-from typing import Tuple, Optional
+from typing import Dict, Tuple, Optional
 
 from ..tools.meshhelper import flip_uvs
 from ..cwxml.drawable import VertexBuffer
@@ -43,12 +43,47 @@ def remove_unused_uvs(vertex_arr: NDArray, used_texcoords: set[str]) -> NDArray:
     return vertex_arr[new_names]
 
 
-def dedupe_and_get_indices(vertex_arr: NDArray) -> Tuple[NDArray, NDArray[np.uint32]]:
-    """Remove duplicate vertices from the buffer and get the new vertex indices in triangle order (used for IndexBuffer). Returns vertices, indices."""
-    vertex_arr, unique_indices, inverse_indices = np.unique(
-        vertex_arr, axis=0, return_index=True, return_inverse=True)
+def round_array(arr: NDArray, decimals: int = 5) -> NDArray:
+    """Round a numpy array to a certain number of decimal places."""
+    return np.round(arr, decimals=decimals)
 
-    return vertex_arr, np.arange(len(unique_indices), dtype=np.uint32)[inverse_indices]
+
+def dedupe_and_get_indices(vertex_arr: NDArray) -> Tuple[NDArray, NDArray[np.uint32]]:
+    """Remove duplicate vertices based on available attributes in the vertex buffer and get new vertex indices."""
+    index_map: Dict[tuple, int] = {}
+    unique_vertices: list = []
+    indices: list = []
+
+    # Dynamically check for the existence of attributes
+    has_normal = 'Normal' in vertex_arr.dtype.names
+    has_color0 = 'Colour0' in vertex_arr.dtype.names
+    has_color1 = 'Colour1' in vertex_arr.dtype.names
+
+    for i, vert in enumerate(vertex_arr):
+        # Always include position in the key (rounded to avoid floating-point issues)
+        vert_key = (tuple(vert['Position']),)
+
+        # Conditionally add UVs, colors, and normals to the key (rounded)
+        if has_color0:
+            vert_key += (tuple(vert['Colour0']),)
+        if has_color1:
+            vert_key += (tuple(vert['Colour1']),)
+        if has_normal:
+            vert_key += (tuple(round_array(vert['Normal'], decimals=5)),)
+
+        # Check if this vertex combination already exists
+        if vert_key not in index_map:
+            index_map[vert_key] = len(unique_vertices)
+            unique_vertices.append(vert)
+        else:
+            print(f"Duplicate found for vertex {i}: {vert_key}")
+
+        indices.append(index_map[vert_key])
+
+    print(f"Original vertex count: {len(vertex_arr)}")
+    print(f"Unique vertex count: {len(unique_vertices)}")
+    
+    return np.array(unique_vertices), np.array(indices, dtype=np.uint32)
 
 def get_indices_without_deduplication(vertex_arr: NDArray) -> Tuple[NDArray, NDArray[np.uint32]]:
     """Return the original vertex array and an array of indices ranging from 0 to the length of the vertex array."""
