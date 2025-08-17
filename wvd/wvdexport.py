@@ -300,6 +300,7 @@ def create_geometries_xml(mesh_eval: bpy.types.Mesh, materials: list[bpy.types.M
             vert_buffer = vert_buffer[new_names]
 
         vert_buffer, ind_buffer = dedupe_and_get_indices(vert_buffer)
+        
         geom_xml = Geometry()
         geom_xml.bounding_box_max, geom_xml.bounding_box_min = get_geom_extents(vert_buffer["Position"])
         geom_xml.shader_index = mat_index
@@ -639,13 +640,7 @@ def split_vert_buffers(
 
 def create_shader_group_xml(materials: list[bpy.types.Material], drawable_xml: Drawable):
     shaders = get_shaders_from_blender(materials)
-    texture_dictionary = texture_dictionary_from_materials(materials)
-
     drawable_xml.shader_group.shaders = shaders
-    if len(texture_dictionary) > 0:
-        drawable_xml.shader_group.texture_dictionary.textures = texture_dictionary
-    else:
-        delattr(drawable_xml.shader_group, "texture_dictionary")
 
 def texture_dictionary_from_materials(materials: list[bpy.types.Material]):
     texture_dictionary: dict[str, Texture] = {}

@@ -1,16 +1,17 @@
 import os
 import shutil
 import math
+from xml.dom import minidom
 import bmesh
 import bpy
 import zlib
-from ..cwxml.drawable_RDR import VertexLayout
 import numpy as np
+import xml.etree.ElementTree as ET
+from ..cwxml.drawable_RDR import VertexLayout
 from numpy.typing import NDArray
 from typing import Callable, Optional
 from collections import defaultdict
 from mathutils import Quaternion, Vector, Matrix
-
 from ..lods import operates_on_lod_level
 from .model_data import get_faces_subset
 
@@ -20,6 +21,7 @@ from ..cwxml.drawable import (
     Drawable,
     RDR1VisualDictionary,
     RDRParameters,
+    RDRTextureDictionaryList,
     SamplerShaderParameter,
     Texture,
     Skeleton,
@@ -63,19 +65,33 @@ from ..cwxml import drawable
 
 def export_wfd(drawable_obj: bpy.types.Object, filepath: str) -> bool:
     export_settings = get_export_settings()
-    drawable_xml = create_drawable_xml(drawable_obj, auto_calc_inertia=export_settings.auto_calculate_inertia, auto_calc_volume=export_settings.auto_calculate_volume, apply_transforms=export_settings.apply_transforms)  
-    drawable_xml.write_xml(filepath)
+
+    drawable_xml = create_drawable_xml(
+        drawable_obj,
+        auto_calc_inertia=export_settings.auto_calculate_inertia,
+        auto_calc_volume=export_settings.auto_calculate_volume,
+        apply_transforms=export_settings.apply_transforms
+    )
+
+    xml_str = ET.tostring(drawable_xml, encoding="utf-8").decode()
+    parsed_str = minidom.parseString(xml_str)
+    pretty_xml_str = parsed_str.toprettyxml(indent="  ")
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(pretty_xml_str)
+
     write_embedded_textures(drawable_obj, filepath)
     return True
 
 def create_drawable_xml(drawable_obj: bpy.types.Object, armature_obj: Optional[bpy.types.Object] = None, materials: Optional[list[bpy.types.Material]] = None, auto_calc_volume: bool = False, auto_calc_inertia: bool = False, apply_transforms: bool = False):
-    """Create a ``Drawable`` cwxml object. Optionally specify an external ``armature_obj`` if ``drawable_obj`` is not an armature."""
+    """Create an ``RDR1FragDrawable`` object with embedded ``Drawable`` and ``TextureDictionary`` nodes."""
     global current_game
     current_game = SollumzGame.RDR1
     drawable.current_game = current_game
-    tag_name = "RDR1FragDrawable"
 
-    drawable_xml = Drawable(tag_name)
+    root_tag = "RDR1FragDrawable"
+
+    drawable_xml = Drawable("Drawable")
     drawable_xml.matrix = None
     drawable_xml.name = remove_number_suffix(drawable_obj.name.lower())
 
@@ -109,7 +125,14 @@ def create_drawable_xml(drawable_obj: bpy.types.Object, armature_obj: Optional[b
     if armature_obj is not None:
         armature_obj.data.pose_position = original_pose
 
-    return drawable_xml
+    tex_dict = RDRTextureDictionaryList()
+    tex_dict.textures = texture_dictionary_from_materials(materials)
+
+    root = ET.Element(root_tag)
+    root.append(tex_dict.to_xml())
+    root.append(drawable_xml.to_xml())
+
+    return root
 
 
 def create_model_xmls(drawable_xml: Drawable, drawable_obj: bpy.types.Object, materials: list[bpy.types.Material], bones: Optional[list[bpy.types.Bone]] = None):
@@ -276,20 +299,21 @@ def create_geometries_xml(mesh_eval: bpy.types.Mesh, materials: list[bpy.types.M
         geom_xml.bounding_box_max, geom_xml.bounding_box_min = get_geom_extents(vert_buffer["Position"])
         geom_xml.shader_index = mat_index
 
-        mesh_bone_ids = []
-        blend_indices = vert_buffer["BlendIndices"]
-        for indices_row in blend_indices:
-            for index in indices_row:
-                if index != 0:
-                    mesh_bone_ids.append(index)
+        if "BlendIndices" in vert_buffer.dtype.names:
+            mesh_bone_ids = []
+            blend_indices = vert_buffer["BlendIndices"]
+            for indices_row in blend_indices:
+                for index in indices_row:
+                    if index != 0:
+                        mesh_bone_ids.append(index)
 
-        mesh_bone_ids = list(set(mesh_bone_ids))
-        mesh_bone_ids_indices = {value: i for i, value in enumerate(mesh_bone_ids)}
+            mesh_bone_ids = list(set(mesh_bone_ids))
+            mesh_bone_ids_indices = {value: i for i, value in enumerate(mesh_bone_ids)}
 
-        for indices_row in blend_indices:
-            for i in range(len(indices_row)):
-                if indices_row[i] != 0:
-                    indices_row[i] = mesh_bone_ids_indices[indices_row[i]]
+            for indices_row in blend_indices:
+                for i in range(len(indices_row)):
+                    if indices_row[i] != 0:
+                        indices_row[i] = mesh_bone_ids_indices[indices_row[i]]
 
 
         layout_map = [
@@ -630,13 +654,7 @@ def split_vert_buffers(
 
 def create_shader_group_xml(materials: list[bpy.types.Material], drawable_xml: Drawable):
     shaders = get_shaders_from_blender(materials)
-    texture_dictionary = texture_dictionary_from_materials(materials)
-
     drawable_xml.shader_group.shaders = shaders
-    if len(texture_dictionary) > 0:
-        drawable_xml.shader_group.texture_dictionary.textures = texture_dictionary
-    else:
-        delattr(drawable_xml.shader_group, "texture_dictionary")
 
 def texture_dictionary_from_materials(materials: list[bpy.types.Material]):
     texture_dictionary: dict[str, Texture] = {}
@@ -989,7 +1007,7 @@ def get_shaders_from_blender(materials):
     for material in materials:
         shader = Shader()
         shader.name = material.shader_properties.name
-        shader.draw_bucket = material.shader_properties.renderbucket
+        shader.draw_bucket = int(RenderBucket[material.shader_properties.renderbucket])
         shader_def = ShaderManager.find_shader(shader.name, SollumzGame.RDR1)
         shader.parameters = RDRParameters()
         shader.parameters.items = create_shader_parameters_list_template(shader_def)

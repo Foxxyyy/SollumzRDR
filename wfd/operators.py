@@ -138,7 +138,7 @@ class MaterialConverterHelper:
         return rdr1_shadermats[bpy.context.scene.shader_material_index].value
 
     def convert_material(self, obj: bpy.types.Object, material: bpy.types.Material) -> bpy.types.Material | None:
-        return MaterialConverter(obj, material).convert(self.get_shader_name())
+        return MaterialConverter(obj, material).convert(self.get_shader_name(), SollumzGame.RDR1)
 
     def execute(self, context):
         for obj in context.selected_objects:
@@ -196,6 +196,11 @@ class SOLLUMZ_OT_create_shader_material(SOLLUMZ_OT_base, bpy.types.Operator):
     def create_material(self, context, obj, shader):
         mat = create_shader(shader)
         obj.data.materials.append(mat)
+
+        if len(obj.material_slots) == 0:
+            obj.active_material = mat
+        else:
+            obj.material_slots[len(obj.material_slots) - 1].material = mat
 
         for n in mat.node_tree.nodes:
             if isinstance(n, bpy.types.ShaderNodeTexImage):

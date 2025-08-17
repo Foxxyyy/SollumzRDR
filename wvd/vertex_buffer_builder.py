@@ -75,13 +75,8 @@ def dedupe_and_get_indices(vertex_arr: NDArray) -> Tuple[NDArray, NDArray[np.uin
         if vert_key not in index_map:
             index_map[vert_key] = len(unique_vertices)
             unique_vertices.append(vert)
-        else:
-            print(f"Duplicate found for vertex {i}: {vert_key}")
 
         indices.append(index_map[vert_key])
-
-    print(f"Original vertex count: {len(vertex_arr)}")
-    print(f"Unique vertex count: {len(unique_vertices)}")
     
     return np.array(unique_vertices), np.array(indices, dtype=np.uint32)
 

@@ -52,9 +52,15 @@ class WFD:
     def from_xml_file(filepath):
         global current_game
         tree = ET.parse(filepath)
-        gameTag = tree.getroot().tag
+        root = tree.getroot()
         current_game = SollumzGame.RDR1
-        return Drawable(gameTag).from_xml_file(filepath)
+
+        texdict_element = root.find("TextureDictionary")
+        drawable_element = root.find("Drawable")
+
+        wfd = Drawable.from_xml(drawable_element)
+        wfd.shader_group.texture_dictionary = RDRTextureDictionaryList.from_xml(texdict_element)
+        return wfd
     
     @staticmethod
     def write_xml(drawable, filepath):
@@ -79,7 +85,7 @@ class RDRTextureDictionaryList(ElementTree, AbstractClass):
 
     def __init__(self) -> None:
         super().__init__()
-        self.version = AttributeProperty("version", 1)
+        self.version = AttributeProperty("version", 0)
         self.textures = []
     
     @classmethod
@@ -214,12 +220,20 @@ class CBufferShaderParameter(ShaderParameter):
         
         if hasattr(self, "value") and self.value is not None:
             array_element = ET.SubElement(element, "Array")
-            for value_tuple in self.value:
+            for i, value in enumerate(self.value):
                 item_element = ET.SubElement(array_element, "Item")
-                item_element.set("x", str(value_tuple[0]))
-                item_element.set("y", str(value_tuple[1]))
-                item_element.set("z", str(value_tuple[2]))
-                item_element.set("w", str(value_tuple[3]))
+
+                # Ensure value is a tuple/list of 4 floats
+                if isinstance(value, (list, tuple)) and len(value) == 4:
+                    x, y, z, w = value
+                else:
+                    # Fallback: log issue and default to (0, 0, 0, 0)
+                    x, y, z, w = 0.0, 0.0, 0.0, 0.0
+
+                item_element.set("x", str(x))
+                item_element.set("y", str(y))
+                item_element.set("z", str(z))
+                item_element.set("w", str(w))
 
         return element
 
@@ -359,8 +373,6 @@ class ShaderGroup(ElementTree):
 
     def __init__(self):
         super().__init__()
-        if current_game == SollumzGame.RDR1:
-            self.texture_dictionary = RDRTextureDictionaryList()
         self.shaders = ShadersList()
 
 
@@ -775,12 +787,14 @@ class RDR1VisualDictionary(ElementTree, AbstractClass):
     def from_xml(cls, element: ET.Element):
         new = super().from_xml(element)
         drawables = element.findall("Drawables")
+        texdict_element = element.find("TextureDictionary")
 
         for item in drawables:
             drawable_items = item.findall("Item")
             for child in drawable_items:
                 drawable = Drawable.from_xml(child)
                 drawable.tag_name = "Drawable"
+                drawable.shader_group.texture_dictionary = RDRTextureDictionaryList.from_xml(texdict_element)
                 new.drawables.append(drawable)
         return new
     

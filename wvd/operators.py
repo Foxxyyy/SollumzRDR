@@ -6,7 +6,7 @@ from ..lods import LODLevels
 from ..sollumz_helper import SOLLUMZ_OT_base, find_sollumz_parent
 from ..sollumz_properties import SOLLUMZ_UI_NAMES, LODLevel, SollumType, MaterialType, SollumzGame
 from ..wfd.shader_materials import create_shader, create_tinted_shader_graph, is_tint_material, rdr1_shadermats
-from ..tools.drawablehelper import MaterialConverter, set_recommended_bone_properties, convert_obj_to_visual_dict, convert_obj_to_model, convert_objs_to_single_visual_dict, center_drawable_to_models
+from ..tools.drawablehelper import MaterialConverter, convert_obj_to_drawable, convert_objs_to_single_drawable, set_recommended_bone_properties, convert_obj_to_visual_dict, convert_obj_to_model, convert_objs_to_single_visual_dict, center_drawable_to_models
 from ..tools.blenderhelper import add_armature_modifier, add_child_of_bone_constraint, create_blender_object, create_empty_object, duplicate_object, get_child_of_constraint, set_child_of_constraint_space, tag_redraw
 from ..sollumz_helper import get_sollumz_materials
 from .properties import DrawableShaderOrder
@@ -50,6 +50,80 @@ class SOLLUMZ_OT_create_drawable_dict(bpy.types.Operator):
         return {"FINISHED"}
 
 
+class SOLLUMZ_OT_convert_to_drawable(bpy.types.Operator):
+    """Convert the selected object to a Drawable"""
+    bl_idname = "sollumz.converttodrawable"
+    bl_label = "Convert to Drawable"
+    bl_options = {"UNDO"}
+
+    def execute(self, context: bpy.types.Context):
+        selected_meshes = [obj for obj in context.selected_objects if obj.type == "MESH"]
+
+        if not selected_meshes:
+            self.report({"INFO"}, "No mesh objects selected!")
+            return {"CANCELLED"}
+
+        auto_embed_col = context.scene.auto_create_embedded_col
+        do_center = context.scene.center_drawable_to_selection
+        sollum_game_type = context.scene.sollum_game_type
+
+        if context.scene.create_seperate_drawables or len(selected_meshes) == 1:
+            self.convert_separate_drawables(context, selected_meshes)
+        else:
+            self.convert_to_single_drawable(context, selected_meshes, do_center)
+
+        self.report({"INFO"}, "Succesfully converted all selected objects to a Drawable.")
+
+        return {"FINISHED"}
+
+    def convert_separate_drawables(
+        self,
+        context: bpy.types.Context,
+        selected_meshes: list[bpy.types.Object]
+    ):      
+        for obj in selected_meshes:
+            # Create the drawable object in the same collection as the mesh
+            with context.temp_override(collection=obj.users_collection[0]):
+                convert_obj_to_drawable(obj)
+
+    def convert_to_single_drawable(
+        self,
+        context: bpy.types.Context,
+        selected_meshes: list[bpy.types.Object],
+        do_center: bool = False,
+    ):
+        # Prefer the active object's collection; fallback to the first selected mesh
+        target_coll_obj = context.active_object if context.active_object in selected_meshes else selected_meshes[0]
+        target_coll = target_coll_obj.users_collection[0]
+
+        with context.temp_override(collection=target_coll):
+            drawable_obj = convert_objs_to_single_drawable(selected_meshes)
+            
+            if do_center:
+                center_drawable_to_models(drawable_obj)
+
+class SOLLUMZ_OT_convert_to_drawable_model(bpy.types.Operator):
+    """Convert the selected object to a Drawable Model"""
+    bl_idname = "sollumz.converttodrawablemodel"
+    bl_label = "Convert to Drawable Model"
+    bl_options = {"UNDO"}
+
+    def execute(self, context):
+        selected_meshes = [
+            obj for obj in context.selected_objects if obj.type == "MESH"]
+
+        if not selected_meshes:
+            self.report({"INFO"}, f"No mesh objects selected!")
+            return {"CANCELLED"}
+
+        for obj in selected_meshes:
+            convert_obj_to_model(obj)
+            self.report(
+                {"INFO"}, f"Converted {obj.name} to a {SOLLUMZ_UI_NAMES[SollumType.DRAWABLE_MODEL]}.")
+
+        return {"FINISHED"}
+
+
 class MaterialConverterHelper:
     bl_options = {"UNDO"}
 
@@ -65,7 +139,7 @@ class MaterialConverterHelper:
         return rdr1_shadermats[bpy.context.scene.shader_material_index].value
 
     def convert_material(self, obj: bpy.types.Object, material: bpy.types.Material) -> bpy.types.Material | None:
-        return MaterialConverter(obj, material).convert(self.get_shader_name())
+        return MaterialConverter(obj, material).convert(self.get_shader_name(), SollumzGame.RDR1)
 
     def execute(self, context):
         for obj in context.selected_objects:

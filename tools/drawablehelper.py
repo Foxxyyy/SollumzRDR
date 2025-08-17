@@ -112,7 +112,7 @@ class MaterialConverter:
         self.normal_node = self._get_normal_node()
 
     def _create_new_material(self, shader_name, game):
-        self.new_material = create_shader(shader_name, game)
+        self.new_material = create_shader(shader_name)
 
     def _set_new_node_images(self):
         if self.new_material is None:
@@ -204,17 +204,18 @@ def set_recommended_bone_properties(bone):
         flag.name = flag_name
 
 
-def convert_obj_to_drawable(obj: bpy.types.Object, sollum_game_type: SollumzGame):
+def convert_obj_to_drawable(obj: bpy.types.Object):
     drawable_obj = create_empty_object(SollumType.DRAWABLE)
     drawable_obj.location = obj.location
 
     obj_name = obj.name
 
-    convert_obj_to_model(obj, sollum_game_type)
+    convert_obj_to_model(obj)
     obj.name = f"{obj.name}.model"
+
     # Set drawable obj name after converting obj to a model to avoid .00# suffix
     drawable_obj.name = obj_name
-    drawable_obj.sollum_game_type = sollum_game_type
+    drawable_obj.sollum_game_type = SollumzGame.RDR1
 
     drawable_obj.parent = obj.parent
     obj.parent = drawable_obj
@@ -246,11 +247,11 @@ def convert_obj_to_visual_dict(obj: bpy.types.Object):
 
     return drawable_obj
 
-def convert_objs_to_single_drawable(objs: list[bpy.types.Object], sollum_game_type: SollumzGame):
+def convert_objs_to_single_drawable(objs: list[bpy.types.Object]):
     drawable_obj = create_empty_object(SollumType.DRAWABLE)
 
     for obj in objs:
-        convert_obj_to_model(obj, sollum_game_type)
+        convert_obj_to_model(obj)
         obj.name = f"{obj.name}.model"
         obj.parent = drawable_obj
 
@@ -266,7 +267,7 @@ def convert_objs_to_single_visual_dict(objs: list[bpy.types.Object], sollum_game
 
     return drawable_obj
 
-def convert_obj_to_model(obj: bpy.types.Object,):
+def convert_obj_to_model(obj: bpy.types.Object):
     obj.sollum_type = SollumType.DRAWABLE_MODEL
     obj.sollum_game_type = SollumzGame.RDR1
     obj.sollumz_lods.add_empty_lods()
