@@ -146,12 +146,10 @@ class VertexBufferBuilder:
         weights_arr = np.zeros((num_verts, 4), dtype=np.float32)
 
         for i, vert in enumerate(self.mesh.vertices):
-            for j, grp in enumerate(vert.groups):
-                if j < 4:
-                    weights_arr[i][j] = grp.weight
-                    ind_arr[i][j] = bone_by_vgroup[grp.group]
-                else:
-                    break
+            groups = sorted(vert.groups, key=lambda g: g.weight, reverse=True) # Sort groups by weight, descending
+            for j, grp in enumerate(groups[:4]): # Top 4 influences
+                weights_arr[i][j] = grp.weight
+                ind_arr[i][j] = bone_by_vgroup.get(grp.group, 0)
 
         weights_arr = self._normalize_weights(weights_arr)
         weights_arr, ind_arr = self._sort_weights_inds(weights_arr, ind_arr)

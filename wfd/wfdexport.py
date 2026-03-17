@@ -300,31 +300,31 @@ def create_geometries_xml(mesh_eval: bpy.types.Mesh, materials: list[bpy.types.M
         geom_xml.shader_index = mat_index
 
         if "BlendIndices" in vert_buffer.dtype.names:
-            mesh_bone_ids = []
+            mesh_bone_ids: list[int] = []
             blend_indices = vert_buffer["BlendIndices"]
-            for indices_row in blend_indices:
-                for index in indices_row:
-                    if index != 0:
-                        mesh_bone_ids.append(index)
 
-            mesh_bone_ids = list(set(mesh_bone_ids))
-            mesh_bone_ids_indices = {value: i for i, value in enumerate(mesh_bone_ids)}
+            for row in blend_indices:
+                for idx in row:
+                    skel_idx = int(idx)
+                    if skel_idx not in mesh_bone_ids:
+                        mesh_bone_ids.append(skel_idx)
+
+            mesh_bone_ids_indices = {skel_idx: i for i, skel_idx in enumerate(mesh_bone_ids)}
 
             for indices_row in blend_indices:
                 for i in range(len(indices_row)):
-                    if indices_row[i] != 0:
-                        indices_row[i] = mesh_bone_ids_indices[indices_row[i]]
-
+                    idx = int(indices_row[i])
+                    indices_row[i] = mesh_bone_ids_indices.get(idx, 0)
 
         layout_map = [
-                ["Position", "P", '3'],
-                ["Normal", "N", '9'],
-                ["Tangent", "X", '9'],
-                ["BlendWeights", "W", '5'],
-                ["BlendIndices", "I", '5'],
-                ["Colour", "C", '5'],
-                ["TexCoord", "T", '7']
-            ]
+            ["Position", "P", '3'],
+            ["Normal", "N", '9'],
+            ["Tangent", "X", '9'],
+            ["BlendWeights", "W", '5'],
+            ["BlendIndices", "I", '5'],
+            ["Colour", "C", '5'],
+            ["TexCoord", "T", '7']
+        ]
         semantic_text = ''
         semantic_format = ''
 
@@ -337,9 +337,7 @@ def create_geometries_xml(mesh_eval: bpy.types.Mesh, materials: list[bpy.types.M
         
         if bones and "BlendWeights" in vert_buffer.dtype.names:
             geom_xml.bone_ids = mesh_bone_ids
-            
-        if bone_by_vgroup != None:
-                geom_xml.bone_count = len(bone_by_vgroup)
+            geom_xml.bone_count = len(mesh_bone_ids)
 
         geom_xml.vertices = vert_buffer
         geom_xml.indices = ind_buffer

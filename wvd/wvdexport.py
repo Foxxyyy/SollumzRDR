@@ -20,6 +20,7 @@ from ..cwxml.drawable import (
     Drawable,
     RDR1VisualDictionary,
     RDRParameters,
+    RDRTextureDictionaryList,
     SamplerShaderParameter,
     Texture,
     Skeleton,
@@ -76,21 +77,55 @@ def create_wvd_xml(wvd_obj: bpy.types.Object, exclude_skeleton: bool = False):
         if child.sollum_type != SollumType.VISUAL_DICTIONARY:
             continue
 
-        if child.type != "ARMATURE":
-            armature_obj = wvd_armature
-        else:
-            armature_obj = None
-
+        armature_obj = None if child.type == "ARMATURE" else wvd_armature
         drawable_xml = create_drawable_xml(child, armature_obj=armature_obj)
 
         if exclude_skeleton or child.type != "ARMATURE":
             drawable_xml.skeleton = None
-
         wvd_xml.drawables.append(drawable_xml)
 
     wvd_xml.drawables.sort(key=get_hash)
 
+    wvd_xml.texture_dictionary = build_wvd_texture_dictionary(wvd_obj)
+    if wvd_xml.texture_dictionary is not None:
+        for d in wvd_xml.drawables:
+            setattr(d.shader_group, "texture_dictionary", wvd_xml.texture_dictionary)
+
     return wvd_xml
+
+def build_wvd_texture_dictionary(drawable_obj: bpy.types.Object):
+    materials = get_sollumz_materials(drawable_obj)
+    names = set()
+
+    for node in get_embedded_texture_nodes(materials):
+        img = getattr(node, "image", None)
+        if img is None:
+            continue
+
+        path = bpy.path.abspath(img.filepath) if img.filepath else ""
+        name = os.path.splitext(os.path.basename(path))[0] if path else img.name
+
+        if name:
+            name = name.strip().lower()
+            if name not in names:
+                names.add(name)
+
+    if not names:
+        return None
+
+    td = RDRTextureDictionaryList()
+    td.textures = []
+
+    textures = []
+    for n in names:
+        t = Texture()
+        t.name = n
+        textures.append(t)
+
+    textures.sort(key=get_hash)
+    td.textures = textures
+    
+    return td
 
 def find_wvd_armature(wvd_obj: bpy.types.Object):
     """Find first drawable with an armature in ``wvd_obj``."""
@@ -163,7 +198,7 @@ def create_model_xmls(drawable_xml: Drawable, drawable_obj: bpy.types.Object, ma
 
             if not model_xml.geometries:
                 continue
-
+            
             append_model_xml(drawable_xml, model_xml, lod.level)
 
     # Drawables only ever have 1 skinned drawable model per LOD level. Since, the skinned portion of the
@@ -441,10 +476,10 @@ def append_model_xml(drawable_xml: Drawable, model_xml: DrawableModel, lod_level
         drawable_xml.drawable_models_med.models.append(model_xml)
 
     elif lod_level == LODLevel.LOW:
-        drawable_xml.drawable_models_low.append(model_xml)
+        drawable_xml.drawable_models_low.models.append(model_xml)
 
     elif lod_level == LODLevel.VERYLOW:
-        drawable_xml.drawable_models_vlow.append(model_xml)
+        drawable_xml.drawable_models_vlow.models.append(model_xml)
 
 
 def join_skinned_models_for_each_lod(drawable_xml: Drawable):
@@ -642,6 +677,7 @@ def create_shader_group_xml(materials: list[bpy.types.Material], drawable_xml: D
     shaders = get_shaders_from_blender(materials)
     drawable_xml.shader_group.shaders = shaders
 
+
 def texture_dictionary_from_materials(materials: list[bpy.types.Material]):
     texture_dictionary: dict[str, Texture] = {}
 
@@ -662,7 +698,6 @@ def get_embedded_texture_nodes(materials: list[bpy.types.Material]):
 
     for mat in materials:
         for node in mat.node_tree.nodes:
-            instanced = isinstance(node, bpy.types.ShaderNodeTexImage)
             if not isinstance(node, bpy.types.ShaderNodeTexImage) or not node.texture_properties.embedded:
                 continue
 
@@ -670,7 +705,6 @@ def get_embedded_texture_nodes(materials: list[bpy.types.Material]):
                 continue
 
             nodes.append(node)
-
     return nodes
 
 
@@ -1030,7 +1064,7 @@ def get_shaders_from_blender(materials):
                 if node.sollumz_texture_name == "None":
                     delattr(param, "texture_name")
                 else:
-                    param.texture_name = node.sollumz_texture_name
+                    param.texture_name = (node.sollumz_texture_name or "").strip().lower()
             elif isinstance(node, SzShaderNodeParameter):
                 param_def = shader_def.parameter_map.get(node.name)
                 is_vector = isinstance(param_def, ShaderParameterFloatVectorDef) and not param_def.is_array

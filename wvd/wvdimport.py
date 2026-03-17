@@ -67,11 +67,9 @@ def create_drawable_obj(drawable_xml: Drawable, filepath: str, name: Optional[st
 
     armature_obj = drawable_obj if drawable_obj.type == "ARMATURE" else external_armature
     if armature_obj is None:
-        model_objs = create_drawable_models(
-            drawable_xml, materials, model_names=f"{name}.model")
+        model_objs = create_drawable_models(drawable_xml, materials, model_names=f"{name}.model")
     else:
-        model_objs = create_rigged_drawable_models(
-            drawable_xml, materials, drawable_obj, armature_obj, split_by_group)
+        model_objs = create_rigged_drawable_models(drawable_xml, materials, drawable_obj, armature_obj, split_by_group)
 
     parent_objs(model_objs, drawable_obj)
 
@@ -292,9 +290,11 @@ def shader_item_to_material(shader: Shader, shader_group: ShaderGroup, filepath:
                     # Assign embedded texture dictionary properties
                     texture_dictionary = shader_group.texture_dictionary.textures
                     if texture_dictionary is not None:
+                        target = (param.texture_name or "").strip().lower()
                         for texture in texture_dictionary:
-                            if texture.name == param.texture_name:
+                            if (texture.name or "").strip().lower() == target:
                                 n.texture_properties.embedded = True
+                                break
 
                     if not n.texture_properties.embedded and not n.image.filepath:
                         # Set external texture name for non-embedded textures

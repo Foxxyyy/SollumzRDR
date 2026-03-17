@@ -107,8 +107,13 @@ class RDRTextureDictionaryList(ElementTree, AbstractClass):
         texs = ET.Element("Textures")
         for value in self.textures:
             item = ET.Element("Item")
+            type = ET.Element("ResourceType")
             name = ET.Element("Name")
+
+            type.text = "EMBEDDED"
             name.text = value.name
+            
+            item.append(type)
             item.append(name)
             texs.append(item)
         element.append(texs)
@@ -711,6 +716,10 @@ class LodList(ElementTree):
         super().__init__()
         self.models = LodModelsList()
 
+    @property
+    def is_empty(self) -> bool:
+        return len(self.models) == 0
+
 
 class Drawable(ElementTree, AbstractClass):
     tag_name = "Drawable"
@@ -771,6 +780,12 @@ class Drawable(ElementTree, AbstractClass):
 
     def to_xml(self):
         element = super().to_xml()
+
+        # Remove empty LOD containers
+        for tag in ("LodMed", "LodLow", "LodVeryLow"):
+            node = element.find(tag)
+            if node is not None and len(list(node)) == 0:
+                element.remove(node)
         return element
 
 
@@ -782,36 +797,44 @@ class RDR1VisualDictionary(ElementTree, AbstractClass):
         self.game = current_game
         self.version = AttributeProperty("version", 0)
         self.drawables = []
+        self.texture_dictionary = None
 
     @classmethod
     def from_xml(cls, element: ET.Element):
         new = super().from_xml(element)
-        drawables = element.findall("Drawables")
-        texdict_element = element.find("TextureDictionary")
 
-        for item in drawables:
-            drawable_items = item.findall("Item")
-            for child in drawable_items:
+        texdict_element = element.find("TextureDictionary")
+        if texdict_element is not None:
+            new.texture_dictionary = RDRTextureDictionaryList.from_xml(texdict_element)
+
+        drawables_root = element.find("Drawables")
+        if drawables_root is not None:
+            for child in drawables_root.findall("Item"):
                 drawable = Drawable.from_xml(child)
                 drawable.tag_name = "Drawable"
-                drawable.shader_group.texture_dictionary = RDRTextureDictionaryList.from_xml(texdict_element)
+
+                if new.texture_dictionary is not None:
+                    drawable.shader_group.texture_dictionary = new.texture_dictionary
                 new.drawables.append(drawable)
         return new
     
     def to_xml(self):   
         element = ET.Element(self.tag_name)
         element.set("version", str(self.version))
+
         drawables_element = ET.SubElement(element, "Drawables")
         for drawable in self.drawables:
-            if isinstance(drawable, Drawable):
-                drawable_element = drawable.to_xml()
-                item_element = ET.SubElement(drawables_element, "Item")
-                for child in drawable_element:
-                    item_element.append(child)
-            else:
-                raise TypeError(
-                    f"{type(self).__name__}s can only hold '{Drawable.__name__}' objects, not '{type(drawable)}'!")
+            if not isinstance(drawable, Drawable):
+                raise TypeError(f"{type(self).__name__}s can only hold '{Drawable.__name__}' objects, not '{type(drawable)}'!")
 
+            drawable_element = drawable.to_xml()
+            item_element = ET.SubElement(drawables_element, "Item")
+
+            for child in list(drawable_element):
+                item_element.append(child)
+                
+        if self.texture_dictionary is not None:
+            element.append(self.texture_dictionary.to_xml())
         return element
 
 
