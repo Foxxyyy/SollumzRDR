@@ -120,12 +120,11 @@ class MeshBuilder:
             for i, bone_ind in enumerate(bone_inds):
                 weight = weights[vert_ind][i]
 
-                if weight == 0 and bone_ind == 0:
+                if weight == 0:
                     continue
 
                 if bone_ind not in vertex_groups:
                     vertex_groups[bone_ind] = create_group(bone_ind)
 
                 vgroup = vertex_groups[bone_ind]
-
                 vgroup.add((vert_ind,), weight, "ADD")

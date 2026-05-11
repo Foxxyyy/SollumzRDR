@@ -96,26 +96,24 @@ def get_group_face_inds(mesh_data: MeshData, bones: list[Bone]):
     num_tris = int(len(mesh_data.ind_arr) / 3)
     faces = mesh_data.ind_arr.reshape((num_tris, 3))
 
-    # Get all the BlendIndices and BlendWeights in each face
     face_blend_inds = blend_inds[faces]
     face_weights = weights[faces]
-    # Any given face could be in a maximum of 12 vertex groups (3 verts * 4 possible groups per vert)
-    face_blend_inds = face_blend_inds.reshape((num_tris, 12))
-    face_weights = face_blend_inds.reshape((num_tris, 12))
 
-    # Mapping of blend indices in each face where (BlendIndex, BlendWeight) pairs are not (0, 0)
-    blend_inds_mask = np.logical_or(face_blend_inds != 0, face_weights != 0)
-    # Maps group indices to the group index of the object they should be parented to
+    face_blend_inds = face_blend_inds.reshape((num_tris, 12))
+    face_weights = face_weights.reshape((num_tris, 12))
+
+    blend_inds_mask = face_weights > 0
     parent_map = get_group_parent_map(face_blend_inds, bones)
 
     for i, all_blend_inds in enumerate(face_blend_inds):
-        # Valid BlendIndices are those where either the index or weight is not 0
         valid_blend_inds = all_blend_inds[blend_inds_mask[i]]
+        valid_weights = face_weights[i][blend_inds_mask[i]]
 
         if valid_blend_inds.size == 0:
             group_ind = 0
         else:
-            group_ind = parent_map[valid_blend_inds[0]]
+            strongest_ind = valid_blend_inds[np.argmax(valid_weights)]
+            group_ind = parent_map[int(strongest_ind)]
 
         group_inds[group_ind].append(i)
 

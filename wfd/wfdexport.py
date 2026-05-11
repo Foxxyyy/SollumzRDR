@@ -299,22 +299,41 @@ def create_geometries_xml(mesh_eval: bpy.types.Mesh, materials: list[bpy.types.M
         geom_xml.bounding_box_max, geom_xml.bounding_box_min = get_geom_extents(vert_buffer["Position"])
         geom_xml.shader_index = mat_index
 
-        if "BlendIndices" in vert_buffer.dtype.names:
+        if "BlendIndices" in vert_buffer.dtype.names and "BlendWeights" in vert_buffer.dtype.names:
             mesh_bone_ids: list[int] = []
             blend_indices = vert_buffer["BlendIndices"]
+            blend_weights = vert_buffer["BlendWeights"]
 
-            for row in blend_indices:
-                for idx in row:
+            for indices_row, weights_row in zip(blend_indices, blend_weights):
+                for idx, weight in zip(indices_row, weights_row):
+                    if int(weight) == 0:
+                        continue
+
                     skel_idx = int(idx)
                     if skel_idx not in mesh_bone_ids:
                         mesh_bone_ids.append(skel_idx)
 
+            if not mesh_bone_ids:
+                mesh_bone_ids.append(0)
+
             mesh_bone_ids_indices = {skel_idx: i for i, skel_idx in enumerate(mesh_bone_ids)}
 
-            for indices_row in blend_indices:
+            for indices_row, weights_row in zip(blend_indices, blend_weights):
+                weight_sum = sum(int(w) for w in weights_row)
+
+                if weight_sum == 0: # Bad vertex: no skinning weights
+                    indices_row[:] = 0
+                    weights_row[:] = 0
+                    weights_row[0] = 255
+                    continue
+
                 for i in range(len(indices_row)):
-                    idx = int(indices_row[i])
-                    indices_row[i] = mesh_bone_ids_indices.get(idx, 0)
+                    if int(weights_row[i]) == 0:
+                        indices_row[i] = 0
+                        continue
+
+                    skel_idx = int(indices_row[i])
+                    indices_row[i] = mesh_bone_ids_indices.get(skel_idx, 0)
 
         layout_map = [
             ["Position", "P", '3'],
@@ -948,50 +967,51 @@ def create_shader_parameters_list_template(shader_def: Optional[ShaderDef]) -> l
 
     parameters = []
     for param_def in shader_def.parameters:
-        match param_def.type:
-            case ShaderParameterType.TEXTURE:
-                param = TextureShaderParameter()
-            case (ShaderParameterType.FLOAT |
-                  ShaderParameterType.FLOAT2 |
-                  ShaderParameterType.FLOAT3 |
-                  ShaderParameterType.FLOAT4):
-                if param_def.is_array:
-                    param = ArrayShaderParameter()
-                    param.values = [Vector() for _ in range(param_def.count)]
-                else:
-                    param = VectorShaderParameter()
-            case ShaderParameterType.FLOAT4X4:
+        if param_def.type == ShaderParameterType.TEXTURE:
+            param = TextureShaderParameter()
+        elif param_def.type in (
+            ShaderParameterType.FLOAT,
+            ShaderParameterType.FLOAT2,
+            ShaderParameterType.FLOAT3,
+            ShaderParameterType.FLOAT4
+        ):
+            if param_def.is_array:
                 param = ArrayShaderParameter()
-                param.values = [Vector(), Vector(), Vector(), Vector()]
-            case ShaderParameterType.SAMPLER:
-                param = SamplerShaderParameter()
-                param.index = param_def.index
-                param.sampler = param_def.x
-            case ShaderParameterType.CBUFFER:
-                param = CBufferShaderParameter()
-                param.buffer = param_def.buffer
-                param.length = param_def.length
-                param.offset = param_def.offset
-                match param_def.value_type:
-                    case ShaderParameterType.FLOAT:
-                        param.x = param_def.x
-                    case ShaderParameterType.FLOAT2:
-                        param.x = param_def.x
-                        param.y = param_def.y
-                    case ShaderParameterType.FLOAT3:
-                        param.x = param_def.x
-                        param.y = param_def.y
-                        param.z = param_def.z
-                    case ShaderParameterType.FLOAT4:
-                        param.x = param_def.x
-                        param.y = param_def.y
-                        param.z = param_def.z
-                        param.w = param_def.w
-            case ShaderParameterType.UNKNOWN:
-                param = UnknownShaderParameter()
-                param.index = param_def.index
-            case _:
-                raise Exception(f"Unknown shader parameter! {param.type=} {param.name=}")
+                param.values = [Vector() for _ in range(param_def.count)]
+            else:
+                param = VectorShaderParameter()
+        elif param_def.type == ShaderParameterType.FLOAT4X4:
+            param = ArrayShaderParameter()
+            param.values = [Vector(), Vector(), Vector(), Vector()]
+        elif param_def.type == ShaderParameterType.SAMPLER:
+            param = SamplerShaderParameter()
+            param.index = param_def.index
+            param.sampler = param_def.x
+        elif param_def.type == ShaderParameterType.CBUFFER:
+            param = CBufferShaderParameter()
+            param.buffer = param_def.buffer
+            param.length = param_def.length
+            param.offset = param_def.offset
+
+            if param_def.value_type == ShaderParameterType.FLOAT:
+                param.x = param_def.x
+            elif param_def.value_type == ShaderParameterType.FLOAT2:
+                param.x = param_def.x
+                param.y = param_def.y
+            elif param_def.value_type == ShaderParameterType.FLOAT3:
+                param.x = param_def.x
+                param.y = param_def.y
+                param.z = param_def.z
+            elif param_def.value_type == ShaderParameterType.FLOAT4:
+                param.x = param_def.x
+                param.y = param_def.y
+                param.z = param_def.z
+                param.w = param_def.w
+        elif param_def.type == ShaderParameterType.UNKNOWN:
+            param = UnknownShaderParameter()
+            param.index = param_def.index
+        else:
+            raise Exception(f"Unknown shader parameter! {param_def.type=} {param_def.name=}")
 
         param.name = param_def.name
         parameters.append(param)
